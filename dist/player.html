@@ -1,0 +1,16 @@
+<!doctype html>
+<title>YouTube Popout</title>
+<style>
+  * { margin:0; padding:0; overflow:hidden; }
+</style>
+<script type=text/javascript src=vendor/jquery.js></script>
+<script>
+  chrome.extension.onRequest.addListener(
+    function(request, sender, sendResponse) {
+      jQuery.noConflict();
+      jQuery('#player').html(request.html);
+      document.title = request.title;
+      jQuery('#player object').css({width: '100%', height: '100%'});
+  });
+</script>
+<div id="player">
