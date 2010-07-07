@@ -1,78 +1,77 @@
-/**
- * Author: Justin Force <justin.force@gmail.com
-*/
+// Author: Justin Force <justin.force@gmail.com
+// Copyright 2010 by Justin Force
+// GitHub: http://github.com/sidewaysmilk/YouTube-Popout
+// License: GPL http://www.gnu.org/licenses/gpl.html
 
-/*
-* TODO Swap globals for a more jQuery solution. (set|clear)Timeout are
-* blockers. AFAIK they eval arguments as strings, so they have to refer to
-* globals. I may be wrong about this, and jQuery may have slick wrappers for
-* timeouts that I haven't learned yet.
-*/
-var player, timeout;
+jQuery.noConflict();
+(function($) {
+	$(function() {
 
-function tryToEnableYouTubePopoutButton() {
+		// The movie player object
+		var player = $('#movie_player');
 
-	if (timeout)
-		clearTimeout(timeout);
-	else 
-		timeout = null;
+		var buttonHTML = '<button id=YouTubePopoutButton>';
+		buttonHTML += '<img width=29 height=29';
+		buttonHTML += ' alt="'+chrome.i18n.getMessage('buttonText')+'"';
+		buttonHTML += ' title="'+chrome.i18n.getMessage('buttonText')+'">';
+		buttonHTML += '</button>'; 
 
-	/* Don't enable button until the player is fully initialized */
-	if (!player.getPlayerState) {
-		timeout = setTimeout(tryToEnableYouTubePopoutButton,500);
-	}
-	else {
-		var img = jQuery('#YouTubePopoutButton img');
-		jQuery('#YouTubePopoutButton').removeAttr('disabled').css(
-			{cursor: 'pointer'
-		}).mouseover(function(e) {
-			img.attr('src',chrome.extension.getURL('icon29.png'));
-		}).mouseout(function() {
-			img.attr('src',chrome.extension.getURL('icon29disabled.png'));
+		var button = $(buttonHTML).css({ position: 'absolute' });
+
+		$('body').append(button);
+
+		disableButton();
+
+		// Reposition the button when the window is resized
+		$(window).resize(function(e) {
+			var offset = player.offset();
+			button.css({
+				top: offset.top - button.height(),
+				left: offset.left + player.width() - button.width(),
+				zIndex: 99999
+			});
 		});
-	}
-}
+		$(window).resize(); // Position the button immediately
 
-function addYouTubePopoutButton() {
+		button.click(function() {
 
-	/* Append a the button to the document. We'll position it with JavaScript/CSS */
-	var jp = jQuery(player);
-	var button = jQuery('<button disabled id=YouTubePopoutButton><img src="'+chrome.extension.getURL('icon29disabled.png')+'" width=29 height=29 alt="'+chrome.i18n.getMessage('buttonText')+'" title="'+chrome.i18n.getMessage('buttonText')+'"></button>');
-	jQuery('body').append(button);
+			// Assign player and re-enable button in case video has changed
+			player = $('#movie_player'); 
+			disableButton();
+			tryToEnableButton();
 
-	button.css({ 'position': 'absolute' });
+			player.get(0).pauseVideo();
 
-	/* Reposition the button when the window is resized */
-	jQuery(window).resize(function(e) {
-		var button = jQuery('#YouTubePopoutButton');
-		var jp = jQuery('#movie_player');
-		var offset = jp.offset();
-		button.css({
-			'top': offset.top - button.height() + 'px',
-			'left': offset.left + jp.width() - button.width() + 'px',
-			'zIndex': 99999
+			// Tell background.html to open new window
+			chrome.extension.sendRequest({set: true, html: player.get(0).getVideoEmbedCode(), title: document.title});
+
+			return false;
 		});
+
+		function tryToEnableButton() {
+
+			// timeout to recheck whether player is ready
+			if (this.timeout)
+				clearTimeout(this.timeout);
+			else
+				this.timeout = null;
+
+			// Don't enable button until the player is fully initialized
+			if (!player.get(0).getPlayerState)
+				this.timeout = setTimeout(tryToEnableButton,500);
+			else {
+				button.removeAttr('disabled').css( {cursor: 'pointer' }).children('img').hover(function() {
+					$(this).attr('src', chrome.extension.getURL('icon29.png'));
+				}, function() {
+					$(this).attr('src', chrome.extension.getURL('icon29disabled.png'));
+				});
+			}
+		}
+		tryToEnableButton();
+
+		function disableButton() {
+			button.attr('disabled', 'disabled').css({cursor: 'default'}).children('img').unbind('mouseenter mouseleave').attr('src', chrome.extension.getURL('icon29disabled.png'));
+		}
 	});
+})(jQuery);
 
-	jQuery(window).resize(); /* Position the button immediately */
-
-	button.click(function() {
-		player = jQuery('#movie_player')[0]; /* Have to assign player again in case video has changed */
-
-		player.pauseVideo();
-
-		chrome.extension.sendRequest({set: true, html: player.getVideoEmbedCode(), title: document.title});
-
-		return false;
-	});
-
-}
-
-jQuery.noConflict(); /* Don't clobber $ */
-jQuery(document).ready(function() {
-	player = jQuery('#movie_player')[0];
-	if (player) {
-		addYouTubePopoutButton();
-		tryToEnableYouTubePopoutButton();
-	}
-});
