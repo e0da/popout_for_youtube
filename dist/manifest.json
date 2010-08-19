@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["http://www.youtube.com/*"],
-      "js": ["vendor/jquery.js",
+      "js": ["lib/jquery.js",
         "youtube_popout.js"]
     }
   ],
