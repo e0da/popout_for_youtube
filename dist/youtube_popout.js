@@ -42,7 +42,8 @@ jQuery.noConflict();
 
 			player.get(0).pauseVideo();
 
-			// Tell background.html to open new window
+      // Tell background.html to open new window. Grab a fresh copy of the HTML
+      // for the embed tag and its friends.
 			chrome.extension.sendRequest({set: true, html: $('#watch-video').html(), title: document.title});
 
 			return false;
