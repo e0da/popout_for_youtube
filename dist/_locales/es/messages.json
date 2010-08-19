@@ -1,14 +1,14 @@
 { 
-	"extName": {
-		"message": "Ventanita YouTube",
-		"description": "Nombre de la extensión"
-	},
-	"buttonText": {
-		"message": "Abra el vídeo en una ventana nueva",
-		"description": "Texto de ayuda del botón."
-	},
-	"extDescription": {
-		"message": "Agregar un botón a YouTube para que aparezca el vídeo se convierte en una nueva ventana de tamaño variable.",
-		"description": "Describir la extensión."
-	}
+  "extName": {
+    "message": "Ventanita YouTube",
+    "description": "Nombre de la extensión"
+  },
+  "buttonText": {
+    "message": "Abra el vídeo en una ventana nueva",
+    "description": "Texto de ayuda del botón."
+  },
+  "extDescription": {
+    "message": "Agregar un botón a YouTube para que aparezca el vídeo se convierte en una nueva ventana de tamaño variable.",
+    "description": "Describir la extensión."
+  }
 }
