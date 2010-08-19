@@ -1,18 +1,26 @@
 <!doctype html>
-<title>YouTube Popout</title>
-<style>
-	* { margin:0; padding:0; overflow:hidden; }
-</style>
-<script type=text/javascript src=vendor/jquery.js></script>
-<script>
-	chrome.extension.onRequest.addListener(
-	function(request, sender, sendResponse) {
-		jQuery.noConflict();
-		(function($) {
-			$('#player').html(request.html);
-			document.title = request.title;
-			$('#player object').css({width: '100%', height: '100%'});
-		})(jQuery);
-	});
-</script>
-<div id="player">
+<html>
+  <head>
+    <title>YouTube Popout</title>
+    <style>
+      body, div { margin:0 !important; padding:0 !important; }
+    </style>
+    <script type=text/javascript src=vendor/jquery.js></script>
+    <script>
+      chrome.extension.onRequest.addListener(
+      function(request, sender, sendResponse) {
+        jQuery.noConflict();
+        (function($) {
+          alert(request.html);
+          $('#player').html(request.html);
+          document.title = request.title;
+          var embed = $('embed').css({ width: '100%', height: '100%' }).attr('width', '100%').attr('height', '100%'); 
+
+        })(jQuery);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="player">
+      Loading...
+    </div>

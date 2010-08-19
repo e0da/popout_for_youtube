@@ -43,7 +43,7 @@ jQuery.noConflict();
 			player.get(0).pauseVideo();
 
 			// Tell background.html to open new window
-			chrome.extension.sendRequest({set: true, html: player.get(0).getVideoEmbedCode(), title: document.title});
+			chrome.extension.sendRequest({set: true, html: $('#watch-video').html(), title: document.title});
 
 			return false;
 		});
