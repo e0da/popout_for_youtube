@@ -1,6 +1,6 @@
 { 
   "extName": {
-    "message": "YouTube Popout",
+    "message": "Popout YouTube™",
     "description": "Name of the extension."
   },
   "buttonText": {
@@ -8,7 +8,7 @@
     "description": "Help text of the button."
   },
   "extDescription": {
-    "message": "Add a button to YouTube to pop the video out into a new resizable window.",
+    "message": "Add a button to YouTube™ to pop the video out into a new resizable window.",
     "description": "Describe the extension."
   }
 }
