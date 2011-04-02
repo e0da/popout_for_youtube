@@ -4,6 +4,11 @@ Popout for YouTube™
 An extension for Google Chrome™ that adds a button to videos on youtube.com to
 "pop out" the video into a new window. Uses jQuery.
 
+Download and Install
+--------
+
+Download and install via the [Chrome Web Store](https://chrome.google.com/webstore/detail/pofekaindcmmojfnfgbpklepkjfilcep).
+
 Contents
 --------
 
