@@ -4,7 +4,7 @@
     function(request, sender, sendResponse) {
       if (request.set) {
         var window_options = 'location=no,directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=500,height=500';
-        window.open('player.html', 'Popout_for_YouTube', window_options);
+        window.open('player.html', 'Popout_for_YouTube' + request.title, window_options);
         chrome.windows.getLastFocused(function(win) {
           chrome.tabs.getAllInWindow(win.id, function(tabs) {
             chrome.tabs.sendRequest(tabs[0].id, {html: request.html, title: request.title});
@@ -15,3 +15,4 @@
     }
   );
 </script>
+
