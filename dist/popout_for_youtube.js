@@ -6,37 +6,133 @@
 jQuery.noConflict();
 (function($) { $(function() {
 
-  var selector = $('video') ? 'video' : '#movie_player';
+  /* Constants/labels */
+  var HTML5 = 0x0;
+  var FLASH = 0x1;
+  var html5Selector = 'video';
+  var flashSelector = '#movie_player';
 
-  $(window).bind('playerReady', function(e) {
-    var player = getPlayer();
-    console.log(player.getPlayerState());
-  });
+  /* The YouTube player */
+  var player = null;
 
-  function getPlayer() {
-    return $('#movie_player').get(0);
+  /* The player type (HTML5 or Flash) */
+  var type = null;
+
+  /* Get the player */
+  getPlayer();
+
+  /* If there's no player, this page doesn't have one. Just quit. */
+  if (player === null) {
+    return;
   }
 
-  var checkPlayerReady = setInterval(function() {
+  /* Wait until the player is loaded and ready (the custom playerReady event is
+  * triggered) to get started */
+  $(window).bind('playerReady', function(e) {
+    normalizePlayer();
+    addButton();
+  });
 
-    function trigger() {
-      clearInterval(checkPlayerReady);
+  /* Trigger custom event playerReady when the player is ready */
+  var interval = setInterval(function() {
+    if (playerReady()) {
+      clearInterval(interval);
       $(window).trigger('playerReady');
     }
+  }, 250);
 
-    try {
-      $('video').get(0).readyState && trigger();
-    } catch (e) {
-      console.log(e);
+  function getPlayer() {
+    /* Default to HTML5 player, then fall back to the Flash player */
+    player = $('video');
+    type = HTML5;
+
+    if (player.length === 0) {
+      player = $('#movie_player');
+      type = FLASH;
     }
+  }
 
-    try {
-      $('#movie_player').get(0).getPlayerState && trigger();
-    } catch(e) {
-      console.log(e);
+  /* Check whether there is a player state attribute or method. If there
+  * is, the player has loaded and is ready to be manipulated. */
+  function playerReady() {
+    if (player.length === 0) {
+      return false;
+    } else if (type === HTML5) {
+      return player.get(0).readyState;
     }
-    console.log('checked');
-  }, 200);
+    else { /* type === FLASH */
+      return player.get(0).getPlayerState;
+    }
+  }
 
+  /* Set up normalized API on top of player of either type */
+  function normalizePlayer() {
+    var node = player.get(0);
+    if (type === HTML5) {
+      player.state = function() {
+        return node.readyState;
+      }
+      player.time = function() {
+        return node.currentTime;
+      }
+      player.pause = function() {
+        return node.pause();
+      }
+      player.play = function() {
+        return node.play();
+      }
+      player.seek = function(time) {
+        return node.currentTime = time;
+      }
+    }
+    else { /* type === FLASH */
+      player.pause = function() {
+        return node.pauseVideo();
+      }
+      player.play = function() {
+        return node.playVideo();
+      }
+      player.state = function() {
+        return node.getPlayerState();
+      }
+      player.seek = function(time) {
+        return node.seekTo(time, true);
+      }
+      player.time = function() {
+        return node.getCurrentTime();
+      }
+    }
+  }
+
+  function addButton() {
+    /*
+    * TODO
+    *
+    * Create and add the button. Should be inside the container that holds the
+    * video so that it is aligned to the right and directly above the video.
+    *
+    */
+    var button = $('<button>Popout</button>');
+    $('body').prepend(button);
+
+    button.click(popout);
+  }
+
+  function popout() {
+    /* Pause video, note current time. */
+    player.pause();
+    var time = player.time();
+
+    /* Run it back a couple seconds. If we've only been playing a few seconds,
+    * start the popped out video at the beginning. */
+    time = time < 10 ? 0 : time - 2;
+    
+    /*
+    * TODO
+    *
+    * Create new window, copy player to it, advance to current time, and play
+    * video. This requires utilizing the Chrome API messaging system.
+    */
+  }
 }); })(jQuery);
 
