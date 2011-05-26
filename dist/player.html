@@ -14,8 +14,7 @@
 <div id=player></div>
 <script type=text/javascript src=lib/jquery.js></script>
 <script>
-chrome.extension.onRequest.addListener(
-function(request, sender, sendResponse) {
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
   jQuery.noConflict();
   (function($) {

@@ -21,7 +21,9 @@ jQuery.noConflict();
     background: 'url(' + iconUrl + ')',
     position: 'absolute',
     right: 0,
-    top: -30
+    top: -30,
+    zIndex: 9999,
+    cursor: 'pointer'
   };
 
   /* The YouTube player */
