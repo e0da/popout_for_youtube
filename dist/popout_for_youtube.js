@@ -1,7 +1,10 @@
-// Author: Justin Force <justin.force@gmail.com
-// Copyright 2010 by Justin Force
-// GitHub: http://github.com/sidewaysmilk/YouTube-Popout
-// License: GPL http://www.gnu.org/licenses/gpl.html
+/*
+* Author: Justin Force <justin.force@gmail.com
+* Copyright 2011 by Justin Force
+* GitHub: http://github.com/sidewaysmilk/popout-for-youtube
+* License: 3-clause BSD license
+*          http://www.w3.org/Consortium/Legal/2008/03-bsd-license.html
+*/
 
 jQuery.noConflict();
 (function($) { $(function() {
