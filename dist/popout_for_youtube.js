@@ -135,9 +135,11 @@ jQuery.noConflict();
 
   function addButton() {
 
-    /* Create the button and append it to the previously defined buttonParent. */
+    /* Create the button and append it to the previously defined buttonParent,
+    * then fade it in all classy-like. */
     var button = $('<button>').text(text).css(css).attr('title', text);
     buttonParent.append(button);
+    button.hide().fadeIn();
 
     button.click(popout);
   }
