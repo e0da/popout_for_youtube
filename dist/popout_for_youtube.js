@@ -9,7 +9,7 @@
 jQuery.noConflict();
 (function($) { $(function() {
 
-  /* Constants/labels */
+  // Constants/labels
   var HTML5 = 0x0;
   var FLASH = 0x1;
   var html5Selector = 'video';
@@ -29,36 +29,36 @@ jQuery.noConflict();
     cursor: 'pointer'
   };
 
-  /* The YouTube player */
+  // The YouTube player
   var player = null;
 
-  /* The YouTube video ID */
+  // The YouTube video ID
   var id = null;
 
-  /* The player type (HTML5 or Flash) */
+  // The player type (HTML5 or Flash)
   var type = null;
 
-  /* The parent of the button (where we append it). Varies between players. By
-  * choosing a good parent, we can get the button to automatically align to the
-  * right edge of the player. */
+  // The parent of the button (where we append it). Varies between players. By
+  // choosing a good parent, we can get the button to automatically align to
+  // the right edge of the player.
   var buttonParent = null;
 
-  /* Get the player */
+  // Get the player
   getPlayer();
 
-  /* If there's no player, this page doesn't have one. Just quit. */
+  // If there's no player, this page doesn't have one. Just quit.
   if (player === null) {
     return;
   }
 
-  /* Wait until the player is loaded and ready (the custom playerReady event is
-  * triggered) to get started */
+  // Wait until the player is loaded and ready (the custom playerReady event is
+  // triggered) to get started
   $(window).bind('playerReady', function(e) {
     normalize();
     addButton();
   });
 
-  /* Trigger custom event playerReady when the player is ready */
+  // Trigger custom event playerReady when the player is ready
   var interval = setInterval(function() {
     if (playerReady()) {
       clearInterval(interval);
@@ -67,10 +67,10 @@ jQuery.noConflict();
   }, 250);
 
   function getPlayer() {
-    /* Default to HTML5 player, then fall back to the Flash player */
+    // Default to HTML5 player, then fall back to the Flash player
     player = $('video');
     type = HTML5;
-    id = document.URL.match(/\?.*v=([^\&]+)/)[1]; /* pull ID from URL */
+    id = document.URL.match(/\?.*v=([^\&]+)/)[1]; // pull ID from URL
 
     if (player.length === 0) {
       player = $('#movie_player');
@@ -78,20 +78,20 @@ jQuery.noConflict();
     }
   }
 
-  /* Check whether there is a player state attribute or method. If there
-  * is, the player has loaded and is ready to be manipulated. */
+  // Check whether there is a player state attribute or method. If there is,
+  // the player has loaded and is ready to be manipulated.
   function playerReady() {
     if (player.length === 0) {
       return false;
     } else if (type === HTML5) {
       return player.get(0).readyState;
     }
-    else { /* type === FLASH */
+    else { // type === FLASH
       return player.get(0).getPlayerState;
     }
   }
 
-  /* Normalize the environment for all player types.*/
+  // Normalize the environment for all player types
   function normalize() {
     var node = player.get(0);
     if (type === HTML5) {
@@ -114,7 +114,7 @@ jQuery.noConflict();
         return node.currentTime = time;
       }
     }
-    else { /* type === FLASH */
+    else { // type === FLASH
 
       buttonParent = player.parent();
 
@@ -138,8 +138,8 @@ jQuery.noConflict();
 
   function addButton() {
 
-    /* Create the button and append it to the previously defined buttonParent,
-    * then fade it in all classy-like. */
+    // Create the button and append it to the previously defined buttonParent,
+    // then fade it in all classy-like.
     var button = $('<button>').text(text).css(css).attr('title', text);
     buttonParent.append(button);
     button.hide().fadeIn();
@@ -159,19 +159,19 @@ jQuery.noConflict();
 
   function popout() {
 
-    /* Pause video, note current time and dimensions */
+    // Pause video, note current time and dimensions
     player.pause();
     var time = player.time();
     var width = player.outerWidth(true);
     var height = player.outerHeight(true);
 
 
-    /* Run it back a couple seconds. If we've only been playing a few seconds,
-    * start the popped out video at the beginning. */
+    // Run it back a couple seconds. If we've only been playing a few seconds,
+    // start the popped out video at the beginning.
     time = time < 10 ? 0 : time - 3;
 
-    /* Tell background.html to create new window containing video with current
-    * time and dimentions. */
+    // Tell background.html to create new window containing video with current
+    // time and dimentions.
     chrome.extension.sendRequest({id: id, title: document.title, time: time, width: width, height: height});
   }
 }); })(jQuery);
