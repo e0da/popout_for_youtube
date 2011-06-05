@@ -25,7 +25,7 @@ jQuery.noConflict();
     position: 'absolute',
     right: 0,
     top: -30,
-    zIndex: 9999,
+    zIndex: 99, // so that it doesn't get covered by ads, etc.
     cursor: 'pointer'
   };
 
@@ -145,6 +145,16 @@ jQuery.noConflict();
     button.hide().fadeIn();
 
     button.click(popout);
+
+    // Because full screen in the HTML5 player just expands the video to fill
+    // the whole screen, we need to set the player's z-Index to be higher than
+    // the button's so that the button doesn't appear on top of the full screen
+    // video.
+    if (type == HTML5) {
+      player.css({zIndex: 100});
+      console.log(player.css('z-index'));
+    }
+
   }
 
   function popout() {
