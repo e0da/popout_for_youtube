@@ -19,13 +19,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   jQuery.noConflict();
   (function($) {
 
-    /* Set the title */
+    // Set the title
     document.title = request.title;
 
-    /* Set the window size to match the video size */
+    // Set the window size to match the video size
     window.resizeTo(request.width, request.height);
 
-    /* Load the YouTube Player API */
+    // Load the YouTube Player API
     $.getScript('http://www.youtube.com/player_api', function() {
 
       var player;

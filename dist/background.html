@@ -6,8 +6,8 @@ var popouts = [];
 function killCurrentPopoutIfItExists(name, callback) {
   if (popouts[name]) {
 
-    /* TODO It would be nice if when you closed the window, the original player
-    * seeked to the current time of the popout. */
+    // TODO It would be nice if when you closed the window, the original player
+    // seeked to the current time of the popout.
     chrome.windows.remove(popouts[name], callback);
     popouts[name] = null;
   }
@@ -20,8 +20,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
   var name = 'Popout_for_YouTube' + request.title;
 
-  /* Open a new window with a unique name, but if it already exists, kill it
-  * and make a new one */
+  // Open a new window with a unique name, but if it already exists, kill it
+  // and make a new one
   killCurrentPopoutIfItExists(name, openNewPopout);
 
   function openNewPopout() {
@@ -32,7 +32,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     }, function(window) {
 
       popouts[name] = window.id;
-      /* Tell the tab about the video so it can embed and play it */
+
+      // Tell the tab about the video so it can embed and play it
       chrome.tabs.sendRequest(window.tabs[0].id, {
         id: request.id,
         title: request.title,
