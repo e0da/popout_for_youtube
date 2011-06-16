@@ -51,10 +51,14 @@ jQuery.noConflict();
     return;
   }
 
+  // Get the video ID
+  getID();
+
   // Wait until the player is loaded and ready (the custom playerReady event is
   // triggered) to get started
   $(window).bind('playerReady', function(e) {
     normalize();
+    fixCSS();
     addButton();
   });
 
@@ -70,12 +74,15 @@ jQuery.noConflict();
     // Default to HTML5 player, then fall back to the Flash player
     player = $('video');
     type = HTML5;
-    id = document.URL.match(/\?.*v=([^\&]+)/)[1]; // pull ID from URL
 
     if (player.length === 0) {
       player = $('#movie_player');
       type = FLASH;
     }
+  }
+
+  function getID() {
+      id = document.URL.match(/\?.*v=([^\&]+)/)[1]; // pull ID from URL
   }
 
   // Check whether there is a player state attribute or method. If there is,
@@ -139,22 +146,11 @@ jQuery.noConflict();
   function addButton() {
 
     // Create the button and append it to the previously defined buttonParent,
-    // then fade it in all classy-like.
-    var button = $('<button>').text(text).css(css).attr('title', text);
+    // then fade it in all classy-like and attach the click handler.
+    var button = $('<button id=popoutForYouTube>').text(text).css(css).attr('title', text);
+    console.log(buttonParent.attr('id'));
     buttonParent.append(button);
-    button.hide().fadeIn();
-
-    button.click(popout);
-
-    // Because full screen in the HTML5 player just expands the video to fill
-    // the whole screen, we need to set the player's z-Index to be higher than
-    // the button's so that the button doesn't appear on top of the full screen
-    // video.
-    if (type == HTML5) {
-      player.css({zIndex: 100});
-      console.log(player.css('z-index'));
-    }
-
+    button.hide().fadeIn().click(popout);
   }
 
   function popout() {
@@ -165,14 +161,29 @@ jQuery.noConflict();
     var width = player.outerWidth(true);
     var height = player.outerHeight(true);
 
-
-    // Run it back a couple seconds. If we've only been playing a few seconds,
-    // start the popped out video at the beginning.
-    time = time < 10 ? 0 : time - 3;
+    // Run it back a second. If we've only been playing a few seconds, start
+    // the popped out video at the beginning.
+    time = time < 10 ? 0 : time - 1;
 
     // Tell background.html to create new window containing video with current
     // time and dimentions.
     chrome.extension.sendRequest({id: id, title: document.title, time: time, width: width, height: height});
+  }
+
+  function fixCSS() {
+
+    // Because full screen in the HTML5 player just expands the video to fill
+    // the whole screen, we need to set the player's z-Index to be higher than
+    // the button's so that the button doesn't appear on top of the full screen
+    // video.
+    if (type == HTML5) {
+      player.css({zIndex: 100});
+    }
+
+    // Due to changes in YouTube's style rules around June 15, 2011, we have to
+    // set the buttonParent's overflow to visible so that the button won't be
+    // hidden when we push it above the boundary of the container.
+    buttonParent.css({overflow: 'visible'});
   }
 }); })(jQuery);
 
