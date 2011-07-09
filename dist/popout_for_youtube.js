@@ -148,7 +148,6 @@ jQuery.noConflict();
     // Create the button and append it to the previously defined buttonParent,
     // then fade it in all classy-like and attach the click handler.
     var button = $('<button id=popoutForYouTube>').text(text).css(css).attr('title', text);
-    console.log(buttonParent.attr('id'));
     buttonParent.append(button);
     button.hide().fadeIn().click(popout);
   }
