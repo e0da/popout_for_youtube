@@ -177,12 +177,13 @@ jQuery.noConflict();
     // video.
     if (type == HTML5) {
       player.css({zIndex: 100});
-    }
 
-    // Due to changes in YouTube's style rules around June 15, 2011, we have to
-    // set the buttonParent's overflow to visible so that the button won't be
-    // hidden when we push it above the boundary of the container.
-    buttonParent.css({overflow: 'visible'});
+      // Due to changes in YouTube's style rules around September 19, 2011, we
+      // have to set the buttonParent's parent's overflow to visible so that the
+      // button won't be hidden when we push it above the boundary of the
+      // container.
+      buttonParent.parent().css({overflow: 'visible'});
+    }
   }
 }); })(jQuery);
 
