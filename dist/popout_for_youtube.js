@@ -171,6 +171,10 @@ jQuery.noConflict();
 
   function fixCSS() {
 
+    // Without this, the button isn't allowed to draw outside the parent
+    // container (we use a negative margin to position it).
+    buttonParent.css({overflow: 'visible'});
+
     // Because full screen in the HTML5 player just expands the video to fill
     // the whole screen, we need to set the player's z-Index to be higher than
     // the button's so that the button doesn't appear on top of the full screen
@@ -178,10 +182,7 @@ jQuery.noConflict();
     if (type == HTML5) {
       player.css({zIndex: 100});
 
-      // Due to changes in YouTube's style rules around September 19, 2011, we
-      // have to set the buttonParent's parent's overflow to visible so that the
-      // button won't be hidden when we push it above the boundary of the
-      // container.
+      // The HTML5 version has to set this for parent's parent, too.
       buttonParent.parent().css({overflow: 'visible'});
     }
   }
