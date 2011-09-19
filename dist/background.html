@@ -6,8 +6,6 @@ var popouts = [];
 function killCurrentPopoutIfItExists(name, callback) {
   if (popouts[name]) {
 
-    // TODO It would be nice if when you closed the window, the original player
-    // seeked to the current time of the popout.
     chrome.windows.remove(popouts[name], callback);
     popouts[name] = null;
   }
