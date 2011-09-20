@@ -152,17 +152,22 @@ jQuery.noConflict();
     button.hide().fadeIn().click(popout);
   }
 
-  function popout() {
+  function popout(e) {
+
+    // If we don't stop propagation, the click bubbles up to the player which
+    // can cause the video to resume playing after it's paused. (definitely
+    // occurs in HTML5 player)
+    e.stopPropagation();
 
     // Pause video, note current time and dimensions
-    player.pause();
     var time = player.time();
     var width = player.outerWidth(true);
     var height = player.outerHeight(true);
+    player.pause();
 
     // Run it back a second. If we've only been playing a few seconds, start
     // the popped out video at the beginning.
-    time = time < 10 ? 0 : time - 1;
+    time = time < 5 ? 0 : time - 1;
 
     // Tell background.html to create new window containing video with current
     // time and dimentions.
