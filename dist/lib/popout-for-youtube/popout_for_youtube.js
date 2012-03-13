@@ -146,9 +146,16 @@ function addButton() {
 
   // Create the button and append it to the previously defined buttonParent,
   // then fade it in all classy-like and attach the click handler.
+  //
+  // Also, shift it down then up when clicked to make it look pressed.
+  //
   var button = $('<button id=popoutForYouTube>').text(text).css(css).attr('title', text);
   buttonParent.append(button);
-  button.hide().fadeIn().click(popout);
+  button.hide().fadeIn().click(popout).mousedown(function (e) {
+    $(e.target).css({marginTop: 1});
+  }).mouseup(function (e) {
+    $(e.target).css({marginTop: 0});
+  });
 }
 
 function fixCSS() {
