@@ -1,10 +1,13 @@
 {
-  "version": "3.5.1",
+  "version": "3.5.2",
   "name": "__MSG_name__",
   "description": "__MSG_description__",
   "default_locale": "en",
   "permissions": ["tabs"],
   "background_page": "background.html",
+  "background": {
+    "scripts": ["background.js"]
+  },
   "content_scripts": [
     {
       "matches": [
@@ -13,7 +16,9 @@
       ],
       "js": [
         "lib/jquery.js",
-        "popout_for_youtube.js"
+        "popout_for_youtube.js",
+        "player.js",
+        "background.js"
       ]
     }
   ],

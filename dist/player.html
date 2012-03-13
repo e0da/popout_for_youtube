@@ -13,44 +13,5 @@
   }
 </style>
 <div id=player></div>
-<script type=text/javascript src=lib/jquery.js></script>
-<script>
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-
-  jQuery.noConflict();
-  (function($) {
-
-    // Set the title
-    document.title = request.title;
-
-    // Set the window size to match the video size
-    window.resizeTo(request.width, request.height);
-
-    // Load the YouTube Player API
-    $.getScript('http://www.youtube.com/player_api', function() {
-
-      var player;
-      
-      onYouTubePlayerAPIReady = function() {
-        player = new YT.Player('player', {
-          height: request.height,
-          width: request.width,
-          videoId: request.id,
-          enablejsapi: 1,
-          events: {
-            'onReady': seekAndPlay
-          }
-        });
-      }
-
-      function seekAndPlay(e) {
-        player.seekTo(request.time);
-        player.playVideo();
-      }
-
-    });
-  })(jQuery);
-
-});
-</script> 
-
+<script src=lib/jquery.js></script>
+<script src=player.js></script>
