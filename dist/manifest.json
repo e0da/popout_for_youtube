@@ -6,7 +6,7 @@
   "permissions": ["tabs"],
   "background_page": "background.html",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["lib/popout-for-youtube/background.js"]
   },
   "content_scripts": [
     {
@@ -16,15 +16,15 @@
       ],
       "js": [
         "lib/jquery.js",
-        "popout_for_youtube.js",
-        "player.js",
-        "background.js"
+        "lib/popout-for-youtube/popout_for_youtube.js",
+        "lib/popout-for-youtube/player.js",
+        "lib/popout-for-youtube/background.js"
       ]
     }
   ],
   "icons": {
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   }
 }
 
