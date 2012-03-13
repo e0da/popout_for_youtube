@@ -178,7 +178,8 @@ jQuery.noConflict();
 
     // Without this, the button isn't allowed to draw outside the parent
     // container (we use a negative margin to position it).
-    buttonParent.css({overflow: 'visible'});
+    $('#watch-video, #watch-player').css({overflow: 'visible'}); // extra CSS hack ca. March 13, 2012
+    buttonParent.css({overflow: 'visible'}).parent().css({overflow: 'visible'});
 
     // Because full screen in the HTML5 player just expands the video to fill
     // the whole screen, we need to set the player's z-Index to be higher than
