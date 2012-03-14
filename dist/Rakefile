@@ -1,8 +1,0 @@
-require 'jslint-v8'
-require 'rb-inotify'
-
-JSLintV8::RakeTask.new do |task|
-  task.name = 'lint'
-  task.include_pattern = '**/*.js'
-  task.exclude_pattern = 'lib/jquery.js'
-end
