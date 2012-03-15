@@ -22,6 +22,15 @@ fix_visibility = ->
     '#watch-container'
   ].join(',')).css {overflow: 'visible'}
 
+video_id = -> $('[name=video_id]').val()
+
+launch_popout = ->
+  chrome.extension.sendRequest {
+    action: 'launch'
+    video_id: video_id()
+    title: document.title
+  }
+
 insert_button = ->
   fix_visibility()
   $(BOX).append button
@@ -29,5 +38,12 @@ insert_button = ->
   # shift the icon to make it look clicked
   button.mousedown -> button.css {marginTop: 1}
   button.mouseup   -> button.css {marginTop: 0}
+
+  #
+  # TODO in addition to launching the popout, the video should be stopped (it
+  #      should stop downloading) and the current time should be sent along
+  #      with the launch request so it can pick up where it left of.
+  #
+  button.click launch_popout
 
 $ -> insert_button()
