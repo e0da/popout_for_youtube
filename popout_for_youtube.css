@@ -1,0 +1,12 @@
+#popout_for_youtube {
+  text-indent: -999em;
+  width: 29px;
+  height: 29px;
+  position: absolute;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+video, embed {
+  z-index: 10000;
+}
