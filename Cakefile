@@ -5,8 +5,11 @@ fs = require 'fs'
 
 dist_files = [
   'background.html'
-  'background.css'
+  'popout.html'
+  'popout_for_youtube.css'
+  'images'
   'lib'
+  'vendor'
   '_locales'
   'manifest.json'
   'README.md'

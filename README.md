@@ -5,16 +5,31 @@ An extension for Google Chrome™ that adds a button to videos on youtube.com to
 "pop out" the video into a new window. Uses jQuery.
 
 Download and Install
---------
+--------------------
 
 Download and install via the [Chrome Web Store](https://chrome.google.com/webstore/detail/pofekaindcmmojfnfgbpklepkjfilcep).
 
-Contents
---------
+Implementation
+--------------
 
-* `dist` folder contains the files which are to be packaged in a zip and
-  uploaded to Google
-* `res` folder contains resources such as images and certs
+Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org).
+
+Development Requirements
+------------------------
+
+You need CoffeeScript and zip support to build it. If you have the bins
+`coffee`, `cake`, and `zip`, you're good to go.
+
+Compiling
+---------
+
+Run `cake` for a list of tasks. These are the big ones.
+
+* `cake build` to compile
+* `cake zip` runs `cake build` then prepares the Chrome extension as a zip file
+
+Copyright and License
+---------------------
 
 Copyright © 2011, Justin Force
 Licensed under the 3-clause BSD licnese
