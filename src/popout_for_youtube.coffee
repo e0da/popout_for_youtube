@@ -68,11 +68,12 @@ get_current_time = ->
 
 
 #
-# Set current playtack time
+# Set current playtack time to whatever the last reported current_time was
+# minus a second to avoid skipping content.
 #
-seek_to_current_time = ->
-  player.seekTo current_time if FLASH
-  player.currentTime = current_time if HTML
+seek = ->
+  player.seekTo current_time-1 if FLASH
+  player.currentTime = current_time-1 if HTML
 
 
 #
@@ -80,7 +81,6 @@ seek_to_current_time = ->
 # time that the click event fires per popout, so we unbind it.
 #
 resume = (e) ->
-  window.clearInterval current_time_check_interval
   $(player).add($(PLAY_PAUSE)).unbind 'click.resume', resume
   player.src = src
   player.load()
@@ -109,7 +109,7 @@ stop_video = ->
 
     $(player).bind 'canplaythrough', (e) ->
       $(player).unbind e
-      seek_to_current_time()
+      seek()
       player.play()
    
     $(player).add($(PLAY_PAUSE)).bind 'click.resume', resume
@@ -121,7 +121,7 @@ stop_video = ->
 # load it again before hitting play.
 #
 play_video = ->
-  seek_to_current_time()
+  seek()
   player.playVideo() if FLASH
   if HTML
     player.src = src
@@ -129,28 +129,19 @@ play_video = ->
     player.play()
 
 
-current_time_check_interval = null # interval pointer
-
 #
 # Open a new window containing the embedded player for this video.
 #
 launch_popout = ->
   chrome.extension.sendRequest {
-    action: 'launch'
     width: $(player).outerWidth(true)
     height: $(player).outerHeight(true)
+    action: 'launch'
     video_id: video_id()
     title: document.title
     protocol: window.location.protocol
+    current_time: current_time
   }
-
-  current_time_check_interval = window.setInterval ->
-    chrome.extension.sendRequest {
-      action: 'current_time'
-    }, (response) ->
-      console.log response.current_time
-      current_time = response.current_time
-  , 1000
 
 
 #
@@ -190,6 +181,14 @@ set_player_and_type = ->
   else
     player = $('#movie_player').get 0
     FLASH  = true
+
+
+#
+# Update current time as received from popout
+#
+chrome.extension.onRequest.addListener ( request, sender, send_response) ->
+  if request.action == 'current_time'
+    current_time = request.current_time
 
 
 ################################################################################
