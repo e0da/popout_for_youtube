@@ -9,6 +9,8 @@ dist_files = [
   'lib'
   '_locales'
   'manifest.json'
+  'README.md'
+  'LICENSE'
 ].join ' '
 
 version = ->
