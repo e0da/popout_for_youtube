@@ -12,7 +12,7 @@ Download and install via the [Chrome Web Store](https://chrome.google.com/websto
 Implementation
 --------------
 
-Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org).
+Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org). The source code is managed on GitHub at http://github.com/sidewaysmilk/popout_for_youtube .
 
 Development Requirements
 ------------------------
