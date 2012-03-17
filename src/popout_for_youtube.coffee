@@ -53,10 +53,10 @@ fix_visibility = ->
 
 
 #
-# Get the video ID by reading it from some form on the page.
+# Get the video ID by reading it from the URL
 #
 video_id = ->
-  $('[name=video_id]').val()
+  location.href.match(/v=(\w+)/)[1]
 
 
 #
