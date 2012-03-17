@@ -38,7 +38,7 @@ launch_popout = (request, sender) ->
 #
 launch_unique_popout = (request, sender) ->
   if popouts[name request]
-    try chrome.windows.remove popouts[name request], -> launch_popout(request, sender)
+    chrome.windows.remove popouts[name request], -> launch_popout(request, sender)
   else
     launch_popout(request, sender)
 
