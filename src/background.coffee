@@ -1,7 +1,8 @@
 #
-# List of all existing popouts
+# Lists of all existing popouts and videos
 #
 popouts = []
+videos  = []
 
 
 #
@@ -12,25 +13,25 @@ name = (request) ->
 
 
 #
-# Launch a popout
+# Launch a popout. Add the popout and video to the lists.
 #
 launch_popout = (request, sender) ->
   window = chrome.windows.create {
     type: 'popup'
     url:  'popout.html'
+    width: request.width
+    height: request.height
   }, (window) ->
+
+    # Save the window to the list
+    #
     popouts[name request] = window.id
 
-    chrome.tabs.sendRequest window.tabs[0].id, {
-      video_id: request.video_id
-      title: request.title
-      time: request.time
-      width: request.width
-      height: request.height
-      protocol: request.protocol
-      current_time: request.current_time
-      original_tab_id: sender.tab.id
-    }
+    # Add a couple of fields to the request and save it
+    #
+    request.name = name request
+    request.original_tab_id = sender.tab.id
+    videos[window.tabs[0].id] = request
 
 
 #
@@ -46,7 +47,7 @@ launch_unique_popout = (request, sender) ->
 #
 # Handle requests
 #
-chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
+chrome.extension.onRequest.addListener (request, sender, send_response) ->
 
   if request.action == 'launch'
     launch_unique_popout request, sender
@@ -56,3 +57,6 @@ chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
       action: 'current_time'
       current_time: request.current_time
     }
+
+  if request.action == 'get_video'
+    send_response videos[sender.tab.id]
