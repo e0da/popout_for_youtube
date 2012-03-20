@@ -56,7 +56,7 @@ fix_visibility = ->
 # Get the video ID by reading it from the URL
 #
 video_id = ->
-  location.href.match(/v=(\w+)/)[1]
+  location.href.match(/v=([^&]+)/)[1]
 
 
 #
