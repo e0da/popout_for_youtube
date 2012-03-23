@@ -7,22 +7,21 @@ License: 3-clause BSD license
 ###
 
 
-VIDEO      = 'embed, video'               # jQuery selector string to find video player
-WINDOW     = $(window)                    # cache jQuerified window
-BOX        = '#watch-player'              # the video container to which the button is attached
-PLAY_PAUSE = '[data-default-title=Play]'  # jQuery selector for play/pause button
+WINDOW     = $(window)                                 # cache jQuerified window
+BOX        = '#watch-player, .channels-featured-video' # where we put the button
+PLAY_PAUSE = '[data-default-title=Play]'               # selector for play/pause button
 
 
 #
-# Is it the HTML player or the Flash player? (In caps because it's more
+# Is it the HTML5 player or the Flash player? (In caps because it's more
 # readable, and they're constant once they're set.)
 #
-HTML  = false
+HTML5 = false
 FLASH = false
 
 
 #
-# the button, player node, and player type (HTML or FLASH), and current
+# the button, player node, and player type (HTML5 or FLASH), and current
 # playback time, and whether the video is stopped.
 #
 button       = $('<button id=popout_for_youtube>Pop out')
@@ -45,26 +44,43 @@ src          = null
 #
 fix_visibility = ->
   $([
+    # Flash and WebM player
     '#watch-player'
     '#watch-video'
-    '#watch-video-container'
-    '#watch-container'
+
+    # channel page
+    '#branded-page-body'
+    '.tab-content-body'
   ].join(',')).css {overflow: 'visible'}
 
 
 #
-# Get the video ID by reading it from the URL
+# Get the video ID
 #
 video_id = ->
-  location.href.match(/v=([^&]+)/)[1]
+  id = null
 
+  #
+  # Try a few different things.
+  #
+
+  # canonical link on the page
+  try id = $('link[rel=canonical]').attr('href').match(/v=([^&]+)/)[1]
+
+  # JavaScript on the page
+  try id = $('script').text().match(/"video_id": "([^"]+)"/)[1] unless id
+
+  # URL
+  try id = location.href.match(/v=([^&]+)/)[1] unless id
+
+  id
 
 #
 # Set current playback time as floating point number
 #
 get_current_time = ->
   current_time = player.getCurrentTime() if FLASH
-  current_time = player.currentTime if HTML
+  current_time = player.currentTime if HTML5
 
 
 #
@@ -73,11 +89,11 @@ get_current_time = ->
 #
 seek = ->
   player.seekTo current_time-1 if FLASH
-  player.currentTime = current_time-1 if HTML
+  player.currentTime = current_time-1 if HTML5
 
 
 #
-# Resume playback from a stopped state (HTML only). This only runs the first
+# Resume playback from a stopped state (HTML5 only). This only runs the first
 # time that the click event fires per popout, so we unbind it.
 #
 resume = (e) ->
@@ -91,7 +107,7 @@ resume = (e) ->
 # downloading of the video so that when the new window opens you're not
 # downloading the same video twice simultaneously.
 #
-# For the HTML player, we have to set the src to nothing then load it to stop
+# For the HTML5 player, we have to set the src to nothing then load it to stop
 # streaming. We cache the src and the fact that it's stopped so we can resume
 # playback later. Once it's stopped, we tell it to play the video as soon as it
 # can (this will happen when we .load() it again) and we attack click handlers
@@ -100,7 +116,7 @@ resume = (e) ->
 #
 stop_video = ->
   player.stopVideo() if FLASH
-  if HTML
+  if HTML5
     player.pause()
     src = player.src unless src
     player.src = ''
@@ -123,7 +139,7 @@ stop_video = ->
 play_video = ->
   seek()
   player.playVideo() if FLASH
-  if HTML
+  if HTML5
     player.src = src
     player.load()
     player.play()
@@ -169,18 +185,30 @@ attach_button_events = ->
 
 #
 # Determine the player node (video or embed object) and whether this is the
-# HTML or Flash version of the player (some actions, such as stopping playback,
+# HTML5 or Flash version of the player (some actions, such as stopping playback,
 # work differently for each player).
 #
-set_player_and_type = ->
+set_player_and_type = (callback) ->
 
-  player = $('video').get 0 # try HTML first
+  interval = null
+  video_node = null
 
-  unless player == undefined
-    HTML = true
-  else
-    player = $('#movie_player').get 0
-    FLASH  = true
+  clear_and_callback = ->
+    clearInterval interval
+    player = video_node
+    callback()
+
+  interval = setInterval ->
+    video_node = $('video, embed').get 0
+
+    unless video_node == undefined
+      if video_node.nodeName == 'VIDEO'
+        HTML5 = true
+        clear_and_callback()
+      else if video_node.nodeName == 'EMBED'
+        FLASH  = true
+        clear_and_callback()
+  , 100
 
 
 #
@@ -200,6 +228,6 @@ chrome.extension.onRequest.addListener ( request, sender, send_response) ->
 # Set everything up when the document is ready
 #
 $ ->
-  set_player_and_type()
-  attach_button_to_player()
-  attach_button_events()
+  set_player_and_type ->
+    attach_button_to_player()
+    attach_button_events()
