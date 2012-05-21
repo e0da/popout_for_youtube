@@ -32,7 +32,7 @@ build = (watch=false) ->
     print data.toString()
 
 zip = ->
-  try fs.mkdirSync 'dist', 0755
+  try fs.mkdirSync 'dist', 0o0755
   exec "zip -r #{zip_out()} #{dist_files}"
 
 task 'build', 'build all CoffeeScript in src to JavaScript in lib', ->
