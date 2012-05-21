@@ -32,8 +32,7 @@ Copyright and License
 ---------------------
 
 Copyright © 2011, Justin Force
-Licensed under the 3-clause BSD licnese
+Licensed under the MIT License
 
 jQuery copyright © 2011, John Resig
 Dual licensed under the MIT or GPL Version 2 licenses.
-
