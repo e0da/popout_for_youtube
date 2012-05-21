@@ -198,8 +198,17 @@ set_player_and_type = (callback) ->
     player = video_node
     callback()
 
+  # The video or embed node may not be present immediately. YouTube may create
+  # it dynamically, so simply poll for the node until it appears.
+  #
   interval = setInterval ->
     video_node = $('video, embed').get 0
+
+    # On the channel page when using HTML5, the video node isn't loaded until
+    # you click the player. We want it to load immediately so we can attach the
+    # button, so go ahead and click it.
+    #
+    $('.html5-video-loader').click()
 
     unless video_node == undefined
       if video_node.nodeName == 'VIDEO'
