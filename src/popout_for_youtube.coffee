@@ -196,6 +196,7 @@ set_player_and_type = (callback) ->
   clear_and_callback = ->
     clearInterval interval
     player = video_node
+    try player.play()
     callback()
 
   # The video or embed node may not be present immediately. YouTube may create
@@ -208,7 +209,7 @@ set_player_and_type = (callback) ->
     # you click the player. We want it to load immediately so we can attach the
     # button, so go ahead and click it.
     #
-    $('.html5-video-loader').click()
+    $('#branded-page-body .html5-video-loader').click()
 
     unless video_node == undefined
       if video_node.nodeName == 'VIDEO'
