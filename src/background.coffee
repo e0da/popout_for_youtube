@@ -17,7 +17,7 @@ name = (request) ->
 #
 launch_popout = (request, sender) ->
   window = chrome.windows.create {
-    type: 'popup'
+    type: 'panel'
     url:  'popout.html'
     width: request.width
     height: request.height
