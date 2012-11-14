@@ -16,6 +16,7 @@
         "https://www.youtube.com/*"
       ],
       "js": [
+        "vendor/ga.js",
         "vendor/jquery.js",
         "lib/popout_for_youtube.js"
       ],
