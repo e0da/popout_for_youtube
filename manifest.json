@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "4.2.5",
+  "version": "4.2.6",
   "name": "__MSG_name__",
   "description": "__MSG_description__",
   "default_locale": "en",
@@ -9,7 +9,7 @@
     "http://www.youtube.com/*",
     "https://www.youtube.com/*"
   ],
-  "content_security_policy": "script-src 'self' https://www.youtube.com https://; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://www.youtube.com https://ssl.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": [
       "vendor/ga.js",
