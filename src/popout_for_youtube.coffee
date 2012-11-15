@@ -155,7 +155,6 @@ launch_popout = ->
     action: 'launch'
     video_id: video_id()
     title: document.title
-    protocol: window.location.protocol
     current_time: current_time
   }
 

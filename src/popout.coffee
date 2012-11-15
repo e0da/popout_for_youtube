@@ -13,7 +13,7 @@ chrome.extension.sendRequest {action: 'get_video'}, (response) ->
   #
   # Load the player API then set up the player and play the video
   #
-  $.getScript "#{response.protocol}//www.youtube.com/player_api", ->
+  $.getScript "https://www.youtube.com/player_api", ->
 
 
     #

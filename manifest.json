@@ -1,4 +1,5 @@
 {
+  "manifest_version": 2,
   "version": "4.2.3",
   "name": "__MSG_name__",
   "description": "__MSG_description__",
@@ -8,7 +9,14 @@
     "http://www.youtube.com/*",
     "https://www.youtube.com/*"
   ],
-  "background_page": "background.html",
+  "content_security_policy": "script-src 'self' https://www.youtube.com https://; object-src 'self'",
+  "background": {
+    "scripts": [
+      "vendor/ga.js",
+      "vendor/jquery.js",
+      "lib/background.js"
+    ]
+  },
   "content_scripts": [
     {
       "matches": [
@@ -16,7 +24,6 @@
         "https://www.youtube.com/*"
       ],
       "js": [
-        "vendor/ga.js",
         "vendor/jquery.js",
         "lib/popout_for_youtube.js"
       ],
