@@ -43,14 +43,22 @@ src          = null
 # this is where you want to look.
 #
 fix_visibility = ->
-  $([
-    # Flash and WebM player
-    '#watch7-player'
 
-    # channel page
-    '#branded-page-body'
-    '.tab-content-body'
-  ].join(',')).css {overflow: 'visible'}
+  #
+  # FIXME I don't like using an interval here, but something is happening on the
+  # page after the button is loaded and the visibility set that unsets the
+  # visibility.
+  #
+  setInterval ->
+    $([
+      # Flash and WebM player
+      '#watch7-player'
+
+      # channel page
+      '#branded-page-body'
+      '.tab-content-body'
+    ].join(',')).css {overflow: 'visible'}
+  , 500
 
 
 #
