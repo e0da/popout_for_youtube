@@ -7,12 +7,15 @@ An extension for Google Chrome™ that adds a button to videos on youtube.com to
 Download and Install
 --------------------
 
-Download and install via the [Chrome Web Store](https://chrome.google.com/webstore/detail/pofekaindcmmojfnfgbpklepkjfilcep).
+Download and install via the [Chrome Web
+Store](https://chrome.google.com/webstore/detail/pofekaindcmmojfnfgbpklepkjfilcep).
 
 Implementation
 --------------
 
-Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org). The source code is managed on GitHub at http://github.com/sidewaysmilk/popout_for_youtube .
+Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org). The
+source code is managed on GitHub at
+http://github.com/sidewaysmilk/popout_for_youtube .
 
 Development Requirements
 ------------------------
