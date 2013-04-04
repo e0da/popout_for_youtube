@@ -8,7 +8,7 @@ License: 3-clause BSD license
 
 
 WINDOW     = $(window)                                 # cache jQuerified window
-BOX        = '#watch7-player, .player-container'       # where we put the button
+BOX        = '#player-api, .channels-video-player'     # where we put the button
 PLAY_PAUSE = '[data-default-title=Play]'               # selector for play/pause button
 
 
@@ -52,7 +52,9 @@ fix_visibility = ->
   setInterval ->
     $([
       # Flash and WebM player
-      '#watch7-player'
+      '#movie_player'
+      '#player-api'
+      '#player'
 
       # channel page
       '#branded-page-body'
