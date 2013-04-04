@@ -3,7 +3,7 @@ fs = require 'fs'
 {print} = require 'util'
 {spawn, exec} = require 'child_process'
 
-dist_files = [
+pkg_files = [
   'background.html'
   'popout.html'
   'popout_for_youtube.css'
@@ -20,7 +20,7 @@ version = ->
   JSON.parse(fs.readFileSync('manifest.json')).version
 
 zip_out = ->
-  "dist/popout_for_youtube-#{version()}.zip"
+  "pkg/popout_for_youtube-#{version()}.zip"
 
 build = (watch=false) ->
   options = ['-w', '-c', '-o', 'lib', 'src']
@@ -32,8 +32,8 @@ build = (watch=false) ->
     print data.toString()
 
 zip = ->
-  try fs.mkdirSync 'dist', 0o0755
-  exec "zip -r #{zip_out()} #{dist_files}"
+  try fs.mkdirSync 'pkg', 0o0755
+  exec "zip -r #{zip_out()} #{pkg_files}"
 
 task 'build', 'build all CoffeeScript in src to JavaScript in lib', ->
   build()
