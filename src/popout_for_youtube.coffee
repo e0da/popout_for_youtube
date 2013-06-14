@@ -7,9 +7,10 @@ License: 3-clause BSD license
 ###
 
 
-WINDOW     = $(window)                                 # cache jQuerified window
-BOX        = '#player-api, .channels-video-player'     # where we put the button
-PLAY_PAUSE = '[data-default-title=Play]'               # selector for play/pause button
+WINDOW     = $(window)                   # cache jQuerified window
+BODY       = $('body')                   # cache jQuerified body
+VIDEO      = 'video, embed'              # the video player node
+PLAY_PAUSE = '[data-default-title=Play]' # selector for play/pause button
 
 
 #
@@ -26,41 +27,11 @@ FLASH = false
 #
 button       = $('<button id=popout_for_youtube>Pop out')
 player       = null
+$player      = null # jQuerified player
 player_type  = null
 current_time = null
 stopped      = false
 src          = null
-
-
-#
-# The button is attached to a container which holds the video to align it with
-# the right edge of the video. It's positioned in the top-right corner, then
-# pulled up with a negative margin to appear above the video. At various times,
-# YouTube will adjust the overflow: CSS property of various container elements
-# and this will hide the button. So we set overflow: visible on the parent of
-# the button and its parent and so on up the chain until the button is visible.
-# The list of elements can change overtime. If the button stops displaying,
-# this is where you want to look.
-#
-fix_visibility = ->
-
-  #
-  # FIXME I don't like using an interval here, but something is happening on the
-  # page after the button is loaded and the visibility set that unsets the
-  # visibility.
-  #
-  setInterval ->
-    $([
-      # Flash and WebM player
-      '#movie_player'
-      '#player-api'
-      '#player'
-
-      # channel page
-      '#branded-page-body'
-      '.tab-content-body'
-    ].join(',')).css {overflow: 'visible'}
-  , 500
 
 
 #
@@ -83,6 +54,7 @@ video_id = ->
   try id = location.href.match(/v=([^&]+)/)[1] unless id
 
   id
+
 
 #
 # Set current playback time as floating point number
@@ -168,18 +140,40 @@ launch_popout = ->
   }
 
 
+
 #
-# attach the Popout button to the video player
+# Position the button with its bottom-left corner next to the top-right corner
+# of the video
 #
-attach_button_to_player = ->
-  fix_visibility()
-  $(BOX).append button
+position_button = ->
+  set_button_bottom_left_corner_to video_top_right_corner()
+
+set_button_bottom_left_corner_to = (location)->
+  button.css {
+    left: location.x
+    top:  location.y - button.height()
+  }
+
+video_top_right_corner = ->
+  {
+    x: $player.width() + $player.offset().left
+    y: $player.offset().top
+  }
+
+
+
+#
+# Attach the Popout button to the video player
+#
+attach_button = ->
+  $(BODY).append button
+  setInterval position_button, 100
 
 
 #
 # Attach event handlers to the button
 #
-attach_button_events = ->
+bind_events = ->
 
   # shift the icon to make it look clicked
   button.mousedown -> button.css {marginTop: 1}
@@ -203,7 +197,8 @@ set_player_and_type = (callback) ->
 
   clear_and_callback = ->
     clearInterval interval
-    player = video_node
+    player  = video_node
+    $player = $(player)
     try player.play()
     callback()
 
@@ -211,7 +206,7 @@ set_player_and_type = (callback) ->
   # it dynamically, so simply poll for the node until it appears.
   #
   interval = setInterval ->
-    video_node = $('video, embed').get 0
+    video_node = $(VIDEO).get 0
 
     # On the channel page when using HTML5, the video node isn't loaded until
     # you click the player. We want it to load immediately so we can attach the
@@ -247,5 +242,5 @@ chrome.extension.onRequest.addListener ( request, sender, send_response) ->
 #
 $ ->
   set_player_and_type ->
-    attach_button_to_player()
-    attach_button_events()
+    attach_button()
+    bind_events()
