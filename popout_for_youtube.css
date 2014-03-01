@@ -3,7 +3,7 @@
   width: 29px;
   height: 29px;
   position: absolute;
-  z-index: 9999;
+  z-index: 10000000000000000000000; /* No. I mean, like super, SUPER on top. */
   cursor: pointer;
 
   /* Base64 encoded images/icon29.png */
