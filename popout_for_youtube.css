@@ -13,7 +13,3 @@
 #branded-page-body #popout_for_youtube {
   right: 0;
 }
-
-video, embed {
-  z-index: 10000;
-}
