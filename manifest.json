@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "4.3.2",
+  "version": "5.0.0",
   "name": "__MSG_name__",
   "description": "__MSG_description__",
   "default_locale": "en",
@@ -9,11 +9,13 @@
     "http://www.youtube.com/*",
     "https://www.youtube.com/*"
   ],
+  "web_accessible_resources": [
+    "lib/popout_for_youtube.js"
+  ],
   "content_security_policy": "script-src 'self' https://www.youtube.com https://ssl.google-analytics.com https://s.ytimg.com; object-src 'self'",
   "background": {
     "scripts": [
       "vendor/ga.js",
-      "vendor/jquery.js",
       "lib/background.js"
     ]
   },
@@ -24,8 +26,7 @@
         "https://www.youtube.com/*"
       ],
       "js": [
-        "vendor/jquery.js",
-        "lib/popout_for_youtube.js"
+        "lib/injector.js"
       ],
       "css": ["popout_for_youtube.css"]
     }
