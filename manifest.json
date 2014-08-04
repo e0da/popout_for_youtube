@@ -9,9 +9,6 @@
     "http://www.youtube.com/*",
     "https://www.youtube.com/*"
   ],
-  "web_accessible_resources": [
-    "lib/popout_for_youtube.js"
-  ],
   "content_security_policy": "script-src 'self' https://www.youtube.com https://ssl.google-analytics.com https://s.ytimg.com; object-src 'self'",
   "background": {
     "scripts": [
@@ -26,9 +23,11 @@
         "https://www.youtube.com/*"
       ],
       "js": [
-        "lib/injector.js"
+        "lib/popout_for_youtube.js"
       ],
-      "css": ["popout_for_youtube.css"]
+      "css": [
+        "popout_for_youtube.css"
+      ]
     }
   ],
   "icons": {
