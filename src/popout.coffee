@@ -1,36 +1,53 @@
 class Popout
 
-  constructor: (@videoId, @currentTime, @width, @height)->
-    @createWindow()
+  constructor: ->
+    @getVideoIdAndCurrentTime => @setUpPlayer => @loadVideo => @loadAPI()
 
-  createWindow: ->
-    chrome.windows.create
-      type: 'popup'
-      url:  'popout.html'
-      width: @width
-      height: @height
-    , (window)=>
-      @window = window
-      @loadPlayer()
+  loadVideo: (callback)->
+    iframe                 = document.createElement('iframe')
+    iframe.id              = 'player'
+    iframe.frameborder     = '0'
+    iframe.allowfullscreen = '1'
+    iframe.title           = 'YouTube video player'
+    iframe.width           = '100%'
+    iframe.height          = '100%'
+    iframe.src             = [
+      'https://www.youtube.com/embed/0mfsk8IHbtw'
+      '?enablejsapi=1'
+    ].join('')
+    document.body.appendChild iframe
+    callback()
 
-  loadPlayer: ->
+  loadAPI: ->
     script = document.createElement('script')
-    script.src = 'https://www.youtube.com/player_api'
-    script.onload = @handleScriptLoad
-    document.body.appendChild script
+    script.src = 'https://www.youtube.com/iframe_api'
+    firstScript = document.getElementsByTagName('script')[0]
+    firstScript.parentNode.insertBefore(script, firstScript)
 
-  # FIXME bad name?
-  @handleScriptLoad: =>
-    debugger
-    @window.onYouTubePlayerAPIReady = ->
-      @player = new YT.Player 'player', {
-        height: @height
-        width: @width
+  setUpPlayer: (callback)->
+    window.onYouTubeIframeAPIReady = =>
+      @player = new YT.Player('player', {
+        height:  @height
+        width:   @width
         videoId: @videoId
-        enablejsapi: 1
-        events: {
+        playerVars:
+          enablejsapi: 1
+        events:
           'onReady': =>
             @player.seekTo @currentTime-1
-            @player.play()
-        }
-      }
+            @player.playVideo()
+      })
+      window.player = @player
+    callback()
+
+  getVideoIdAndCurrentTime: (callback)->
+    chrome.windows.getCurrent (window)=>
+      chrome.extension.sendMessage
+        action:   'getVideoIdAndCurrentTime'
+        windowId: window.id
+        (response)=>
+          @videoId     = response.videoId
+          @currentTime = response.currentTime
+          callback()
+
+new Popout

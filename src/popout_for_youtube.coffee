@@ -58,14 +58,16 @@ class Button extends Node
       @openPopout()
 
   openPopout: ->
-    chrome.runtime.sendMessage
+    chrome.extension.sendMessage
       action:       'openPopout'
       videoId:      @videoId
       currentTime:  @video.currentTime()
       width:        @video.width()
       height:       @video.height()
-    , (response)->
-      console.log 'clickity clackers!'
+      uniqueId:     @uniqueId()
+
+  uniqueId: ->
+    Math.random() ^ new Date().getTime()
 
   maintainAlignment: ->
     setInterval =>
