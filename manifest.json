@@ -7,12 +7,13 @@
   "permissions": [
     "tabs",
     "http://www.youtube.com/*",
-    "https://www.youtube.com/*"
+    "https://www.youtube.com/*",
+    "storage"
   ],
   "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://ssl.google-analytics.com https://s.ytimg.com; object-src 'self'",
   "background": {
     "scripts": [
-      "vendor/ga.js",
+      "vendor/javascript/google_analytics.js",
       "lib/background.js"
     ]
   },
@@ -29,6 +30,10 @@
         "popout_for_youtube.css"
       ]
     }
+  ],
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    "options.html"
   ],
   "icons": {
     "48": "images/icon48.png",

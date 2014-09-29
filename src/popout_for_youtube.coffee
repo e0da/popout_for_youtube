@@ -50,12 +50,17 @@ class Button extends Node
     button.className = 'popout-for-youtube__button'
     super button
     @setClickBehavior()
+    @setRightClickBehavior()
     @maintainAlignment()
 
   setClickBehavior: ->
     @node.addEventListener 'click', (event)=>
       @video.pause()
       @openPopout()
+
+  setRightClickBehavior: ->
+    @node.addEventListener 'contextmenu', (event)=>
+      window.open chrome.extension.getURL("options.html")
 
   openPopout: ->
     chrome.extension.sendMessage
