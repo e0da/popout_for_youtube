@@ -1,3 +1,20 @@
+class Extension
+
+  @openOptions: ->
+    window.open chrome.extension.getURL "options.html"
+
+  @openPopout: (video)->
+    chrome.extension.sendMessage
+      action:       'openPopout'
+      videoId:      video.id
+      currentTime:  video.currentTime()
+      width:        video.width()
+      height:       video.height()
+      uniqueId:     @uniqueId()
+
+  @uniqueId: ->
+    Math.random() ^ new Date().getTime()
+
 class Node
 
   constructor: (@node)->
@@ -22,6 +39,7 @@ class Video extends Node
 
   constructor: ->
     super document.querySelector('#player video')
+    @id = document.querySelector('meta[itemprop=videoId]').content
 
   pause: ->
     @node.pause()
@@ -44,7 +62,7 @@ class Video extends Node
 
 class Button extends Node
 
-  constructor: (@videoId, @video)->
+  constructor: (@video)->
     button           = document.createElement('button')
     button.title     = 'Pop out'
     button.className = 'popout-for-youtube__button'
@@ -56,23 +74,11 @@ class Button extends Node
   setClickBehavior: ->
     @node.addEventListener 'click', (event)=>
       @video.pause()
-      @openPopout()
+      Extension.openPopout @video
 
   setRightClickBehavior: ->
     @node.addEventListener 'contextmenu', (event)=>
-      window.open chrome.extension.getURL("options.html")
-
-  openPopout: ->
-    chrome.extension.sendMessage
-      action:       'openPopout'
-      videoId:      @videoId
-      currentTime:  @video.currentTime()
-      width:        @video.width()
-      height:       @video.height()
-      uniqueId:     @uniqueId()
-
-  uniqueId: ->
-    Math.random() ^ new Date().getTime()
+      Extension.openOptions()
 
   maintainAlignment: ->
     setInterval =>
@@ -86,9 +92,8 @@ class Button extends Node
 class YouTubePage
 
   constructor: ->
-    @videoId = document.querySelector('meta[itemprop=videoId]').content
-    @video   = new Video
-    @button  = new Button(@videoId, @video)
-    document.body.appendChild @button.node
+    video   = new Video
+    button  = new Button video
+    document.body.appendChild button.node
 
 new YouTubePage

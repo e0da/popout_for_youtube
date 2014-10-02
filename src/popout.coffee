@@ -12,7 +12,7 @@ class Popout
     iframe.width           = '100%'
     iframe.height          = '100%'
     iframe.src             = [
-      'https://www.youtube.com/embed/0mfsk8IHbtw'
+      "https://www.youtube.com/embed/#{@videoId}"
       '?enablejsapi=1'
     ].join('')
     document.body.appendChild iframe
