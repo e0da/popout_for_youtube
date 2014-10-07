@@ -78,6 +78,7 @@ class Button extends Node
 
   setRightClickBehavior: ->
     @node.addEventListener 'contextmenu', (event)=>
+      event.preventDefault()
       Extension.openOptions()
 
   maintainAlignment: ->

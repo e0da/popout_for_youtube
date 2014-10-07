@@ -1,11 +1,11 @@
 class Options
 
   DEFAULTS =
-    adsEnabled: true
+    'revjet-optout': false
 
   constructor: ->
 
-    $ => chrome.storage.sync.get DEFAULTS, @setOptions
+    $ => chrome.storage.local.get DEFAULTS, @setOptions
 
     $('#save').click => @saveOptions 'Options saved.'
 
@@ -13,18 +13,31 @@ class Options
       @setOptions DEFAULTS
       @saveOptions 'Defaults restored.'
 
+    @notification = $('.alert')
+
   saveOptions: (message)->
-    chrome.storage.sync.set @options(), => @notify message
+    chrome.storage.local.set @options(), => @notify message
 
   setOptions: (options)->
-    $('#adsEnabled').get(0).checked = options.adsEnabled
+    $('#revjet-optout').get(0).checked = !!options['revjet-optout']
 
-  notify: (message)->
-    console.log message
+  notify: (message, klass='success')->
+    @notification.stop().show().text message
+    @notification.addClass "alert-#{klass}"
+    clearInterval(@notificationTimeout) if @notificationTimeout
+    @notificationTimeout = setTimeout =>
+      @resetNotification()
+    , 1000
+
+  resetNotification: ->
+    @notification.stop().show().fadeOut =>
+      @notification.text ''
+      @notification.attr 'class', 'alert'
+      @notification.show()
 
   options: ->
     options = {}
-    options.adsEnabled = $('#adsEnabled').get(0).checked
+    options['revjet-optout'] = $('#revjet-optout').get(0).checked
     options
 
 new Options

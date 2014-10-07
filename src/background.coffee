@@ -28,6 +28,7 @@ class Background
           @[listener] request, sender, sendResponse
 
   openPopout: (request, sender, sendResponse)=>
+    ga 'send', 'event', 'button', 'click', 'popout button', 1
     video = new Video(
       request.videoId
       request.currentTime

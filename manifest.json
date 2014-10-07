@@ -10,10 +10,10 @@
     "https://www.youtube.com/*",
     "storage"
   ],
-  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://ssl.google-analytics.com https://s.ytimg.com; object-src 'self'",
+  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://www.google-analytics.com/analytics.js https://ssl.google-analytics.com https://s.ytimg.com https://maxcdn.bootstrapcdn.com https://code.jquery.com; object-src 'self'",
   "background": {
     "scripts": [
-      "vendor/javascript/google_analytics.js",
+      "analytics.js",
       "lib/background.js"
     ]
   },
@@ -28,6 +28,20 @@
       ],
       "css": [
         "popout_for_youtube.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "revjet_contentscript.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "permissions": [
+        "storage"
       ]
     }
   ],
