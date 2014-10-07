@@ -1,56 +1,53 @@
-#
-# current playback time (within a second)
-#
-current_time = null
+class Popout
 
+  constructor: ->
+    @getVideoIdAndCurrentTime => @setUpPlayer => @loadVideo => @loadAPI()
 
-#
-# Get the video details from the extension
-#
-chrome.extension.sendRequest {action: 'get_video'}, (response) ->
+  loadVideo: (callback)->
+    iframe                 = document.createElement('iframe')
+    iframe.id              = 'player'
+    iframe.frameborder     = '0'
+    iframe.allowfullscreen = '1'
+    iframe.title           = 'YouTube video player'
+    iframe.width           = '100%'
+    iframe.height          = '100%'
+    iframe.src             = [
+      "https://www.youtube.com/embed/#{@videoId}"
+      '?enablejsapi=1'
+    ].join('')
+    document.body.appendChild iframe
+    callback()
 
+  loadAPI: ->
+    script = document.createElement('script')
+    script.src = 'https://www.youtube.com/iframe_api'
+    firstScript = document.getElementsByTagName('script')[0]
+    firstScript.parentNode.insertBefore(script, firstScript)
 
-  #
-  # Load the player API then set up the player and play the video
-  #
-  $.getScript "https://www.youtube.com/player_api", ->
+  setUpPlayer: (callback)->
+    window.onYouTubeIframeAPIReady = =>
+      @player = new YT.Player('player', {
+        height:  @height
+        width:   @width
+        videoId: @videoId
+        playerVars:
+          enablejsapi: 1
+        events:
+          'onReady': =>
+            @player.seekTo @currentTime-1
+            @player.playVideo()
+      })
+      window.player = @player
+    callback()
 
+  getVideoIdAndCurrentTime: (callback)->
+    chrome.windows.getCurrent (window)=>
+      chrome.extension.sendMessage
+        action:   'getVideoIdAndCurrentTime'
+        windowId: window.id
+        (response)=>
+          @videoId     = response.videoId
+          @currentTime = response.currentTime
+          callback()
 
-    #
-    # Set window title and resize to fit the video
-    #
-    document.title = response.title
-    window.resizeTo response.width, response.height
-
-    player = null # the YouTube player
-
-
-    #
-    # Seek to the appropriate time and play the video when the player is ready.
-    #
-    window.onYouTubePlayerAPIReady = ->
-      player = new YT.Player 'player', {
-        height: response.height
-        width: response.width
-        videoId: response.video_id
-        enablejsapi: 1
-        events: {
-          'onReady': ->
-            player.seekTo response.current_time-1
-            player.playVideo()
-        }
-      }
-
-
-      #
-      # Report the current playback time to the background so we can keep the
-      # original page up to date
-      #
-      window.setInterval ->
-        chrome.extension.sendRequest {
-          action: 'current_time'
-          name: response.name
-          current_time: player.getCurrentTime()
-          original_tab_id: response.original_tab_id
-        }
-      , 1000
+new Popout

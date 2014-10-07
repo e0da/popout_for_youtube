@@ -1,62 +1,47 @@
-#
-# Lists of all existing popouts and videos
-#
-popouts = []
-videos  = []
+class Video
 
+  constructor: (@videoId, @currentTime, @width, @height)->
 
-#
-# Return an appropriate popout name for the given request
-#
-name = (request) ->
-  "Popout_for_YouTube_#{request.title}"
+  openWindow: (callback)->
+    chrome.windows.create
+      type:   'popup'
+      url:    'popout.html'
+      width:  @width
+      height: @height
+      (window)-> callback window
 
+class Background
 
-#
-# Launch a popout. Add the popout and video to the lists.
-#
-launch_popout = (request, sender) ->
-  window = chrome.windows.create {
-    type: 'popup'
-    url:  'popout.html'
-    width: request.width
-    height: request.height
-  }, (window) ->
+  LISTENERS = [
+    'openPopout'
+    'getVideoIdAndCurrentTime'
+  ]
 
-    # Save the window to the list
-    #
-    popouts[name request] = window.id
+  constructor: ->
+    @videos = []
+    @setUpListeners()
 
-    # Add a couple of fields to the request and save it
-    #
-    request.name = name request
-    request.original_tab_id = sender.tab.id
-    videos[window.tabs[0].id] = request
+  setUpListeners: ->
+    chrome.runtime.onMessage.addListener (request, sender, sendResponse)=>
+      LISTENERS.forEach (listener)=>
+        if request.action is listener
+          @[listener] request, sender, sendResponse
 
+  openPopout: (request, sender, sendResponse)=>
+    ga 'send', 'event', 'button', 'click', 'popout button', 1
+    video = new Video(
+      request.videoId
+      request.currentTime
+      request.width
+      request.height
+    )
 
-#
-# Close any conflicting popouts then launch a new one
-#
-launch_unique_popout = (request, sender) ->
-  if popouts[name request]
-    try chrome.windows.remove popouts[name request], -> launch_popout(request, sender)
-  else
-    launch_popout(request, sender)
+    video.openWindow (window)=> @videos[window.id] = video
 
+  getVideoIdAndCurrentTime: (request, sender, sendResponse)=>
+    video = @videos[request.windowId]
+    sendResponse
+      videoId:     video.videoId
+      currentTime: video.currentTime
 
-#
-# Handle requests
-#
-chrome.extension.onRequest.addListener (request, sender, send_response) ->
-
-  if request.action == 'launch'
-    launch_unique_popout request, sender
-
-  if request.action == 'current_time'
-    chrome.tabs.sendRequest request.original_tab_id, {
-      action: 'current_time'
-      current_time: request.current_time
-    }
-
-  if request.action == 'get_video'
-    send_response videos[sender.tab.id]
+new Background
