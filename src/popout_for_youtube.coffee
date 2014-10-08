@@ -37,9 +37,8 @@ class Node
 
 class Video extends Node
 
-  constructor: ->
+  constructor: (@id)->
     super document.querySelector('#player video')
-    @id = document.querySelector('meta[itemprop=videoId]').content
 
   pause: ->
     @node.pause()
@@ -90,11 +89,26 @@ class Button extends Node
     @node.style.top  = "#{point.y - @height()}px"
     @node.style.left = "#{point.x}px"
 
-class YouTubePage
+class YouTubeVideoPage
 
   constructor: ->
-    video   = new Video
-    button  = new Button video
-    document.body.appendChild button.node
 
-new YouTubePage
+    @whenVideoChanges =>
+      try @button.remove()
+      @videoId = @getVideoId()
+      @video   = new Video @videoId
+      @button  = new Button @video
+      document.body.appendChild @button.node
+
+  whenVideoChanges: (callback)->
+    setInterval =>
+      callback() if @videoChanged()
+    , 250
+
+  videoChanged: ->
+    @videoId != @getVideoId()
+
+  getVideoId: ->
+    try document.querySelector('meta[itemprop=videoId]').content
+
+new YouTubeVideoPage
