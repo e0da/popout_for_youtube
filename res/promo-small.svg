@@ -14,13 +14,36 @@
    height="140"
    id="svg3244"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="promo-small.svg"
    inkscape:export-filename="/home/force/YouTube-Popout/res/promo-small.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs3246">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4830">
+      <stop
+         style="stop-color:#999999;stop-opacity:1;"
+         offset="0"
+         id="stop4832" />
+      <stop
+         style="stop-color:#999999;stop-opacity:0;"
+         offset="1"
+         id="stop4834" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4293">
+      <stop
+         style="stop-color:#585858;stop-opacity:1;"
+         offset="0"
+         id="stop4295" />
+      <stop
+         style="stop-color:#333333;stop-opacity:1;"
+         offset="1"
+         id="stop4297" />
+    </linearGradient>
     <linearGradient
        y2="1029.8622"
        x2="146.76233"
@@ -253,6 +276,44 @@
        y1="826.75665"
        x2="183.01895"
        y2="978.78461" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4293"
+       id="linearGradient4299"
+       x1="88.75"
+       y1="911.36218"
+       x2="89.25"
+       y2="1053.1122"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3601-2-0"
+       id="linearGradient4820"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1684004,0,0,1.1684004,1.3256002,-143.25879)"
+       x1="20.766422"
+       y1="826.75665"
+       x2="183.01895"
+       y2="978.78461" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3601-2-0"
+       id="linearGradient4825"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.40515812,0,0,0.40515812,0.32752315,655.82506)"
+       x1="20.766422"
+       y1="826.75665"
+       x2="183.01895"
+       y2="978.78461" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4830"
+       id="linearGradient4836"
+       x1="7.4630404"
+       y1="1022.3567"
+       x2="194.21044"
+       y2="1022.3567"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -261,14 +322,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="9.849475"
-     inkscape:cy="26.875141"
+     inkscape:zoom="4"
+     inkscape:cx="85.349475"
+     inkscape:cy="66.875141"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1066"
+     inkscape:window-width="1680"
+     inkscape:window-height="1006"
      inkscape:window-x="0"
      inkscape:window-y="14"
      inkscape:window-maximized="0" />
@@ -280,7 +341,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -290,7 +351,7 @@
      id="layer1"
      transform="translate(0,-912.36218)">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       style="fill:url(#linearGradient4299);fill-opacity:1;stroke:none"
        id="rect3565"
        width="212"
        height="142"
@@ -397,60 +458,35 @@
         </g>
       </g>
     </g>
-    <g
-       id="g3401"
-       transform="matrix(0.90350195,0,0,0.83473913,7.799238,179.04108)">
-      <g
-         transform="matrix(0.43878023,0,0,0.43878023,-8.6744995,556.57301)"
-         id="g3113">
-        <text
-           xml:space="preserve"
-           style="font-size:76.82919312px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4270);font-family:Sans"
-           x="18.489614"
-           y="885.12341"
-           id="text3331-8"
-           sodipodi:linespacing="125%"
-           transform="matrix(1.1715489,0,0,1.1652603,1.329172,-142.87378)"><tspan
-             sodipodi:role="line"
-             id="tspan3333-9"
-             x="18.489614"
-             y="885.12341"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">Popout for</tspan><tspan
-             sodipodi:role="line"
-             x="18.489614"
-             y="981.15991"
-             id="tspan3335-3"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">YouTube</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:89.76725769px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#linearGradient3412);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Sans"
-           x="23.363934"
-           y="891.11084"
-           id="text3331"
-           sodipodi:linespacing="125%"
-           transform="scale(1.0026947,0.99731253)"><tspan
-             sodipodi:role="line"
-             id="tspan3333"
-             x="23.363934"
-             y="891.11084"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3412);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">Popout for</tspan><tspan
-             sodipodi:role="line"
-             x="23.363934"
-             y="1003.3199"
-             id="tspan3335"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3412);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">YouTube</tspan></text>
-      </g>
-      <text
-         sodipodi:linespacing="125%"
-         id="text3144"
-         y="972.9826"
-         x="155.2384"
-         style="font-size:11.71780586px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-         xml:space="preserve"><tspan
-           y="972.9826"
-           x="155.2384"
-           id="tspan3146"
-           sodipodi:role="line">TM</tspan></text>
-    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:31.12797164999999922px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#linearGradient4825);fill-opacity:1;stroke:#2d2d2d;stroke-width:0.40515813000000001;stroke-opacity:1;font-family:Sans"
+       x="7.9696035"
+       y="1014.5063"
+       id="text3331"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0431767,0.95861036)"><tspan
+         sodipodi:role="line"
+         id="tspan3333"
+         x="7.9696035"
+         y="1014.5063"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient4825);fill-opacity:1;stroke:#2d2d2d;stroke-width:0.40515813000000001;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">Popout for</tspan><tspan
+         sodipodi:role="line"
+         x="7.9696035"
+         y="1053.4163"
+         id="tspan3335"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient4825);fill-opacity:1;stroke:#2d2d2d;stroke-width:0.40515813000000001;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold">YouTube</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:9.26045036px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="129.40602"
+       y="1032.6897"
+       id="text3144"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0403732,0.96119353)"><tspan
+         sodipodi:role="line"
+         id="tspan3146"
+         x="129.40602"
+         y="1032.6897">TM</tspan></text>
   </g>
 </svg>

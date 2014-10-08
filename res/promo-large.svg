@@ -10,17 +10,40 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="585"
-   height="220"
+   width="440"
+   height="280"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="promo-large.svg"
    inkscape:export-filename="/home/force/YouTube-Popout/res/promo-large.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4089">
+      <stop
+         style="stop-color:#999999;stop-opacity:1;"
+         offset="0"
+         id="stop4091" />
+      <stop
+         style="stop-color:#999999;stop-opacity:0;"
+         offset="1"
+         id="stop4093" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4063">
+      <stop
+         style="stop-color:#6f6f6f;stop-opacity:1;"
+         offset="0"
+         id="stop4065" />
+      <stop
+         style="stop-color:#333333;stop-opacity:1;"
+         offset="1"
+         id="stop4067" />
+    </linearGradient>
     <linearGradient
        y2="521.14343"
        x2="382.48306"
@@ -668,15 +691,6 @@
        id="linearGradient4195"
        xlink:href="#linearGradient3601-2-0-1"
        inkscape:collect="always" />
-    <filter
-       inkscape:collect="always"
-       id="filter4270"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3808487"
-         id="feGaussianBlur4272" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3601-2-0"
@@ -687,6 +701,25 @@
        y1="826.75665"
        x2="183.01895"
        y2="978.78461" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4063"
+       id="linearGradient4069"
+       x1="261"
+       y1="-24"
+       x2="263"
+       y2="254"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.74543825,0,0,1.1774816,-3.2587471,788.13801)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4089"
+       id="linearGradient4095"
+       x1="21.903099"
+       y1="913.74988"
+       x2="560.44775"
+       y2="913.74988"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -696,13 +729,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="178.64559"
+     inkscape:cx="114.14559"
      inkscape:cy="142.49446"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1066"
+     inkscape:window-width="1680"
+     inkscape:window-height="1006"
      inkscape:window-x="0"
      inkscape:window-y="14"
      inkscape:window-maximized="0" />
@@ -714,7 +747,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -722,16 +755,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-832.36218)">
+     transform="translate(0,-772.36218)">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       id="rect3142"
-       width="587"
-       height="222"
-       x="-1"
-       y="831.36218" />
+       style="fill:url(#linearGradient4069);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.93687773px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect4061"
+       width="439.06311"
+       height="279.06311"
+       x="0.46844482"
+       y="772.83063" />
     <g
-       transform="matrix(4.1410272,0,0,4.1410272,-1076.5702,-1184.5201)"
+       transform="matrix(3.0725838,0,0,2.9641348,-764.42056,-579.78482)"
        id="layer1-5"
        inkscape:label="Layer 1">
       <g
@@ -833,39 +866,21 @@
     </g>
     <g
        id="g3113"
-       transform="translate(-3.5,23)">
-      <text
-         transform="matrix(1.1715489,0,0,1.1652603,1.329172,-142.87378)"
-         sodipodi:linespacing="125%"
-         id="text3331-8"
-         y="885.12341"
-         x="18.489614"
-         style="font-size:76.82919312px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4270);font-family:Sans"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
-           y="885.12341"
-           x="18.489614"
-           id="tspan3333-9"
-           sodipodi:role="line">Popout for</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
-           id="tspan3335-3"
-           y="981.15991"
-           x="18.489614"
-           sodipodi:role="line">YouTube</tspan></text>
+       transform="matrix(0.74073724,0,0,0.74073724,2.1943685,221.62476)">
       <text
          transform="scale(1.0026947,0.99731253)"
          sodipodi:linespacing="125%"
          id="text3331"
          y="891.11084"
          x="23.363934"
-         style="font-size:89.76725769px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Sans"
+         style="font-size:89.76725769px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#393939;stroke-width:1.16840041;stroke-opacity:1;font-family:Sans"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#393939;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
            y="891.11084"
            x="23.363934"
            id="tspan3333"
            sodipodi:role="line">Popout for</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#999999;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;text-anchor:start;fill:url(#linearGradient3121);fill-opacity:1;stroke:#393939;stroke-width:1.16840041;stroke-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
            id="tspan3335"
            y="1003.3199"
            x="23.363934"
@@ -874,13 +889,13 @@
     <text
        xml:space="preserve"
        style="font-size:26.70541px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="370.06491"
-       y="972.0163"
+       x="334.06491"
+       y="919.0163"
        id="text3144"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3146"
-         x="370.06491"
-         y="972.0163">TM</tspan></text>
+         x="334.06491"
+         y="919.0163">TM</tspan></text>
   </g>
 </svg>
