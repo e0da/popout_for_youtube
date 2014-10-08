@@ -1,3 +1,19 @@
+class Extension
+
+  @version: ->
+    chrome.runtime.getManifest().version
+
+  @reportVersion: ->
+    @trackEvent 'Background', 'version', @version()
+
+  @reportButtonClick: ->
+    @trackEvent 'YouTubeVideoPage', 'popoutButtonClick'
+
+  @trackEvent: (category, action, value)->
+    # _gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);
+    # https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
+    _gaq.push ['_trackEvent', category, action, value]
+
 class Video
 
   constructor: (@videoId, @currentTime, @width, @height)->
@@ -20,6 +36,7 @@ class Background
   constructor: ->
     @videos = []
     @setUpListeners()
+    Extension.reportVersion()
 
   setUpListeners: ->
     chrome.runtime.onMessage.addListener (request, sender, sendResponse)=>
@@ -28,7 +45,7 @@ class Background
           @[listener] request, sender, sendResponse
 
   openPopout: (request, sender, sendResponse)=>
-    ga 'send', 'event', 'button', 'click', 'popout button', 1
+    Extension.reportButtonClick()
     video = new Video(
       request.videoId
       request.currentTime

@@ -10,7 +10,7 @@
     "https://www.youtube.com/*",
     "storage"
   ],
-  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://www.google-analytics.com/analytics.js https://ssl.google-analytics.com https://s.ytimg.com https://maxcdn.bootstrapcdn.com https://code.jquery.com; object-src 'self'",
+  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com https://maxcdn.bootstrapcdn.com https://code.jquery.com https://ssl.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": [
       "analytics.js",
