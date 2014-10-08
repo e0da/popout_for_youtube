@@ -2,6 +2,7 @@ class Options
 
   DEFAULTS =
     'revjet-optout': false
+    'whatsNewDismissed': false
 
   constructor: ->
 
@@ -13,7 +14,13 @@ class Options
       @setOptions DEFAULTS
       @saveOptions 'Defaults restored.'
 
+    $('#resetWhatsNew').click => @resetWhatsNew()
+
     @notification = $('.alert')
+
+  resetWhatsNew: ->
+    chrome.storage.local.set whatsNewDismissed: false, =>
+      @notify "What's New Reset"
 
   saveOptions: (message)->
     chrome.storage.local.set @options(), => @notify message

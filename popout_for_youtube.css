@@ -10,3 +10,26 @@
   /* Base64 encoded images/icon29.png */
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAARvSURBVEiJvZdfSFtXHMe/53jun7SrA4dZ1Aajk0QiMhm0dpK6hw1LGD4IhVVaOoobyNje7P4x2IsM1m1MBoW1zIchfdcy0Mi2ihP/IAhbdKJLnEqmi2biTDS53nvP2YOaapKrsRv7wnm558fvc77f+zvhhggh8H+LnVRACKEAngJwBgB5AgYHsANgWwjBT4QSQmwul8vt9/vfcrvdL1NK6WmJhmHoMzMzfX19fd2EkAUhhE6s4iWEML/f/1pLS8u9uro65vV6FcZODCZLmqYhGAwmg8Gg2dPT0zQ6OjoBIUTOBeBMZ2fnr6urq8I0zX+95ufnjY6Ojn4AquXRq6urny4tLXXZ7fYjz1Pb2wgODsA0jGMdCs5RcbEejopKAEBFRUVBVVXVZQCP8yKEEACKw+E4p6pqgd1ur1RVFZnxz3z1JV6wF+cX7WA/dl9vg6QoIISAMUYBELYPZC6X67zP52uqqal5U5Zl29bWliKEUDKhiZ0k9Hg8LygF8NcfETy77/ZAjBBCfT6ft7W1ddjpdJ6tq6tjkiRhZWUFoVAoy2n9Bx/i96kpcMPMgqyMj+GClkTB4SEXyOrBXC6X3NDQ0NnY2Fjo9XoJsFeUSqWwl/hRSYoK94sNWc9Hur/B87E1cEqhmSakggIc9MoUY4zJlZWVr3g8nizCoUk+Vj/d+xqeX34GKEXcMBBUVVw0kns9uJntlHNOZFmWKKXpzcOwk6DDd++ianICghBsmSai/ldBQ79BXwgDALjJs3qkw7e6r8etoa4uuH78ASKxja3Nv/Fn0xVcuHYN5q4OPZ6AHk9AcJ55/x//DB4+TT6RPvric5QPDoITgh3OsXn9Buqv39hzp++mJ1zO9U5Pap7rAI/ufIrzDx9CEIIE59hqewOXbt5M13Jdh5FIpKFZ79TKaWYkaeBnd+B48GDPoRDYefsdXLp160gd39XTTnmuQToOmsup1t0NbhjYEQKpjttoaGvLqpEKz6WhkmqzHqR8pfkuIwQC7fa7aGhvz1nz0nvvY+a5Kiw0XcEz5eVZ+yzTWaa7zFM2379vuXcgyWbD1f5+y5qc8QKAzWZDMpnMa5LzkWma0DRtF4CwvKeqqkLTNKyurv4n0HA4rM/Ozn4HQLe8MrIso7a2FsPDw3A4HHC73XiCrxUYhoHp6el4JBKJDw0NfXIEmjVhlMLr9aK4uBihUAgjIyN5g9bX10U8Hh+nlO4YhrE9NTX1bSAQmAAQFUJwSygASJKEkpISFBUVner9DgwM8N7e3o7x8fF5ACaAbQC62G/AKKVC13XTNE1mFZ+iKFAUJW+njDFOCFkSQsRy7dNUKqUvLy+PLi0t5d30OMViMUSj0eWFhYVNy0NFIhFtbGzsI6fT+f3a2pri8XjoaVwdyDAMhMNhPjc3p09OTn4cjUY1q1oihAAhRCorK6tobm5ur66uvsoYk08LFUKYi4uLgUAg0DU9PT0vhEgdCwXSX4NnnU5noaIop74blFIRi8XiGxsbiYO/D1b6Bzux4YozW0teAAAAAElFTkSuQmCC);
 }
+
+.popout-for-youtube__whats-new {
+  position: absolute;
+  width: 200px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 5px;
+  background: #f0f0f0;
+  z-index: 10000000000000000000000; /* No. I mean, like super, SUPER on top. */
+}
+
+.popout-for-youtube__whats-new h1 {
+  color: #c00;
+}
+
+.popout-for-youtube__whats-new p {
+  margin: 3px;
+}
+
+.popout-for-youtube__whats-new .dismiss {
+  display: block;
+  text-align: right;
+}

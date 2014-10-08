@@ -1,5 +1,8 @@
 class Extension
 
+  DEFAULTS =
+    whatsNewDismissed: false
+
   @openOptions: ->
     window.open chrome.extension.getURL "options.html"
 
@@ -14,6 +17,13 @@ class Extension
 
   @uniqueId: ->
     Math.random() ^ new Date().getTime()
+
+  @doUnlessWhatsNewWasDismissed: (callback)->
+    chrome.storage.local.get DEFAULTS, (results)->
+      callback() unless !!results['whatsNewDismissed']
+
+  @dismissWhatsNew: ->
+    chrome.storage.local.set whatsNewDismissed: true
 
 class Node
 
@@ -35,6 +45,15 @@ class Node
   height: ->
     parseInt @node.offsetHeight
 
+  maintainAlignment: ->
+    setInterval =>
+      @align()
+    , 100
+
+  topRightCorner: ->
+    x: @offset().left + @width()
+    y: @offset().top
+
 class Video extends Node
 
   constructor: (@id)->
@@ -55,13 +74,9 @@ class Video extends Node
   togglePlayback: ->
     if @node.paused then @node.play() else @node.pause()
 
-  topRightCorner: ->
-    x: @offset().left + @width()
-    y: @offset().top
-
 class Button extends Node
 
-  constructor: (@video)->
+  constructor: (@video, @whatsNew)->
     button           = document.createElement('button')
     button.title     = 'Pop out'
     button.className = 'popout-for-youtube__button'
@@ -80,13 +95,38 @@ class Button extends Node
       event.preventDefault()
       Extension.openOptions()
 
-  maintainAlignment: ->
-    setInterval =>
-      @setBottomLeftCorner @video.topRightCorner()
-    , 100
+  align: ->
+    @setBottomLeftCorner @video.topRightCorner()
 
   setBottomLeftCorner: (point)->
     @node.style.top  = "#{point.y - @height()}px"
+    @node.style.left = "#{point.x}px"
+
+class WhatsNew extends Node
+
+  constructor: (@button)->
+    whatsNew = document.createElement('div')
+    super whatsNew
+    whatsNew.className = 'popout-for-youtube__whats-new'
+    whatsNew.innerHTML = """
+      <header>
+        <h1>What's New</h1>
+      </header>
+      <p>You can access options for Popout for YouTube™ by right-clicking the icon.</p>
+      <a class="dismiss" href="#">Dismiss</a>
+    """
+    link = whatsNew.querySelector('a')
+    link.addEventListener 'click', (event)=>
+      Extension.dismissWhatsNew()
+      @node.remove()
+      false
+    @maintainAlignment()
+
+  align: ->
+    @setTopLeftCorner @button.topRightCorner()
+
+  setTopLeftCorner: (point)->
+    @node.style.top  = "#{point.y}px"
     @node.style.left = "#{point.x}px"
 
 class YouTubeVideoPage
@@ -99,6 +139,13 @@ class YouTubeVideoPage
       @video   = new Video @videoId
       @button  = new Button @video
       document.body.appendChild @button.node
+
+      Extension.doUnlessWhatsNewWasDismissed => @setUpToolTip()
+
+  setUpToolTip: ->
+    try @whatsNew.remove()
+    @whatsNew = new WhatsNew @button
+    document.body.appendChild @whatsNew.node
 
   whenVideoChanges: (callback)->
     setInterval =>
