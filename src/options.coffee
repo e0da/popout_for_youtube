@@ -9,7 +9,7 @@ class Extension
     chrome.extension.sendMessage action: 'optionsSaved'
 
   @loadOptions: (defaults, callback)->
-    chrome.storage.local.get DEFAULTS, @setOptions
+    chrome.storage.local.get defaults, callback
 
 class Options
 
@@ -19,7 +19,8 @@ class Options
 
   constructor: ->
 
-    @loadOptions DEFAULTS, => @setOptions()
+    Extension.loadOptions DEFAULTS, (options)=>
+      @setOptions options
 
     $('#save').click => @saveOptions 'Options saved.'
 
