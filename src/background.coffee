@@ -1,10 +1,18 @@
 class Extension
 
+  DEFAULTS =
+    'revjet-optout': false
+    'whatsNewDismissed': false
+
+  @withOptions: (callback)->
+    chrome.storage.local.get DEFAULTS, (results)->
+      callback(results)
+
   @version: ->
-    chrome.runtime.getManifest().version
+    "v#{chrome.runtime.getManifest().version}"
 
   @reportVersion: ->
-    @trackEvent 'Background', 'version', @version()
+    @trackEvent 'Background', 'versionString', @version()
 
   @reportButtonClick: ->
     @trackEvent 'YouTubeVideoPage', 'popoutButtonClick'
@@ -12,7 +20,16 @@ class Extension
   @trackEvent: (category, action, value)->
     # _gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);
     # https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
+    value = "#{value}" if value # Make it a string or leave it undefined
     _gaq.push ['_trackEvent', category, action, value]
+
+  @reportOptions: ->
+    @withOptions (options)=>
+      for option of options
+        @trackEvent 'Options', option, options[option]
+
+  @reportVideoViewed: ->
+    @trackEvent 'YouTubeVideoPage', 'videoViewed'
 
 class Video
 
@@ -29,14 +46,17 @@ class Video
 class Background
 
   LISTENERS = [
-    'openPopout'
     'getVideoIdAndCurrentTime'
+    'openPopout'
+    'optionsSaved'
+    'videoViewed'
   ]
 
   constructor: ->
     @videos = []
     @setUpListeners()
     Extension.reportVersion()
+    Extension.reportOptions()
 
   setUpListeners: ->
     chrome.runtime.onMessage.addListener (request, sender, sendResponse)=>
@@ -60,5 +80,11 @@ class Background
     sendResponse
       videoId:     video.videoId
       currentTime: video.currentTime
+
+  optionsSaved: (request, sender, sendResponse)=>
+    Extension.reportOptions()
+
+  videoViewed: (request, sender, sendResponse)=>
+    Extension.reportVideoViewed()
 
 new Background

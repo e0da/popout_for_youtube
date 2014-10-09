@@ -1,3 +1,16 @@
+class Extension
+
+  @saveOptions: (options, callback)->
+    chrome.storage.local.set options, =>
+      callback()
+      @notifyOptionsSaved()
+
+  @notifyOptionsSaved: ->
+    chrome.extension.sendMessage action: 'optionsSaved'
+
+  @loadOptions: (defaults, callback)->
+    chrome.storage.local.get DEFAULTS, @setOptions
+
 class Options
 
   DEFAULTS =
@@ -6,7 +19,7 @@ class Options
 
   constructor: ->
 
-    $ => chrome.storage.local.get DEFAULTS, @setOptions
+    @loadOptions DEFAULTS, => @setOptions()
 
     $('#save').click => @saveOptions 'Options saved.'
 
@@ -19,11 +32,12 @@ class Options
     @notification = $('.alert')
 
   resetWhatsNew: ->
-    chrome.storage.local.set whatsNewDismissed: false, =>
+    Extension.saveOptions whatsNewDismissed: false, =>
       @notify "What's New Reset"
 
   saveOptions: (message)->
-    chrome.storage.local.set @options(), => @notify message
+    Extension.saveOptions @options(), =>
+      @notify message
 
   setOptions: (options)->
     $('#revjet-optout').get(0).checked = !!options['revjet-optout']

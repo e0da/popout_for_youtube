@@ -25,6 +25,9 @@ class Extension
   @dismissWhatsNew: ->
     chrome.storage.local.set whatsNewDismissed: true
 
+  @notifyVideoViewed: ->
+    chrome.extension.sendMessage action: 'videoViewed'
+
 class Node
 
   constructor: (@node)->
@@ -141,6 +144,7 @@ class YouTubeVideoPage
       document.body.appendChild @button.node
 
       Extension.doUnlessWhatsNewWasDismissed => @setUpToolTip()
+      Extension.notifyVideoViewed()
 
   setUpToolTip: ->
     try @whatsNew.remove()
