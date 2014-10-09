@@ -20,7 +20,7 @@ class Extension
   @trackEvent: (category, action, value)->
     # _gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);
     # https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-    value = "#{value}" if value # Make it a string or leave it undefined
+    value = "#{value}" unless value is undefined # Make it a string or leave it undefined
     _gaq.push ['_trackEvent', category, action, value]
 
   @reportOptions: ->
