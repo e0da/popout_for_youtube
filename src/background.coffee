@@ -1,13 +1,5 @@
 class Extension
 
-  DEFAULTS =
-    'revjet-optout': false
-    'whatsNewDismissed': false
-
-  @withOptions: (callback)->
-    chrome.storage.local.get DEFAULTS, (results)->
-      callback(results)
-
   @version: ->
     "v#{chrome.runtime.getManifest().version}"
 
@@ -22,11 +14,6 @@ class Extension
     # https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
     value = "#{value}" unless value is undefined # Make it a string or leave it undefined
     _gaq.push ['_trackEvent', category, action, value]
-
-  @reportOptions: ->
-    @withOptions (options)=>
-      for option of options
-        @trackEvent 'Options', option, options[option]
 
   @reportVideoViewed: ->
     @trackEvent 'YouTubeVideoPage', 'videoViewed'
@@ -48,7 +35,6 @@ class Background
   LISTENERS = [
     'getVideoIdAndCurrentTime'
     'openPopout'
-    'optionsSaved'
     'videoViewed'
   ]
 
@@ -56,7 +42,6 @@ class Background
     @videos = []
     @setUpListeners()
     Extension.reportVersion()
-    Extension.reportOptions()
 
   setUpListeners: ->
     chrome.runtime.onMessage.addListener (request, sender, sendResponse)=>
@@ -80,9 +65,6 @@ class Background
     sendResponse
       videoId:     video.videoId
       currentTime: video.currentTime
-
-  optionsSaved: (request, sender, sendResponse)=>
-    Extension.reportOptions()
 
   videoViewed: (request, sender, sendResponse)=>
     Extension.reportVideoViewed()

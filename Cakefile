@@ -10,12 +10,9 @@ pkg_files = [
   'analytics.js'
   'LICENSE'
   'manifest.json'
-  'options.css'
-  'options.html'
   'popout.html'
   'popout_for_youtube.css'
   'README.md'
-  'revjet_contentscript.js'
 ].join ' '
 
 version = ->

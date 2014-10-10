@@ -7,10 +7,9 @@
   "permissions": [
     "tabs",
     "http://www.youtube.com/*",
-    "https://www.youtube.com/*",
-    "storage"
+    "https://www.youtube.com/*"
   ],
-  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com https://maxcdn.bootstrapcdn.com https://code.jquery.com https://ssl.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com https://ssl.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": [
       "analytics.js",
@@ -29,25 +28,7 @@
       "css": [
         "popout_for_youtube.css"
       ]
-    },
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "revjet_contentscript.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": false,
-      "permissions": [
-        "storage"
-      ]
     }
-  ],
-  "options_page": "options.html",
-  "web_accessible_resources": [
-    "options.html"
   ],
   "icons": {
     "48": "images/icon48.png",
