@@ -86,6 +86,9 @@ class Button extends Node
     @node.style.top  = "#{point.y - @height()}px"
     @node.style.left = "#{point.x}px"
 
+  remove: ->
+    @node.parentNode.removeChild @node
+
 class YouTubeVideoPage
 
   constructor: ->
