@@ -4,17 +4,16 @@ class Popout
     @getVideoIdAndCurrentTime => @setUpPlayer => @loadVideo => @loadAPI()
 
   loadVideo: (callback)->
-    iframe                 = document.createElement('iframe')
-    iframe.id              = 'player'
-    iframe.frameborder     = '0'
-    iframe.allowfullscreen = '1'
-    iframe.title           = 'YouTube video player'
-    iframe.width           = '100%'
-    iframe.height          = '100%'
-    iframe.src             = [
-      "https://www.youtube.com/embed/#{@videoId}"
-      '?enablejsapi=1'
-    ].join('')
+    iframe        = document.createElement('iframe')
+    iframe.id     = 'player'
+    iframe.title  = 'YouTube video player'
+    iframe.width  = '100%'
+    iframe.height = '100%'
+    iframe.src    = "https://www.youtube.com/embed/#{@videoId}?enablejsapi=1"
+
+    iframe.setAttribute 'frameborder', '0'
+    iframe.setAttribute 'allowfullscreen', ''
+
     document.body.appendChild iframe
     callback()
 
