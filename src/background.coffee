@@ -4,7 +4,7 @@ class Extension
     "v#{chrome.runtime.getManifest().version}"
 
   @reportVersion: ->
-    @trackEvent 'Background', 'versionString', @version()
+    @trackEvent 'Background', 'version', @version()
 
   @reportButtonClick: ->
     @trackEvent 'YouTubeVideoPage', 'popoutButtonClick'
