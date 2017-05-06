@@ -35,11 +35,6 @@ class Node
   height: ->
     parseInt @node.offsetHeight
 
-  maintainAlignment: ->
-    setInterval =>
-      @align()
-    , 100
-
   topRightCorner: ->
     x: @offset().left + @width()
     y: @offset().top
@@ -89,6 +84,11 @@ class Button extends Node
   remove: ->
     @node.parentNode.removeChild @node
 
+  maintainAlignment: ->
+    setInterval =>
+      @align()
+    , 100
+
 class YouTubeVideoPage
 
   constructor: ->
@@ -111,6 +111,6 @@ class YouTubeVideoPage
     @videoId != @getVideoId()
 
   getVideoId: ->
-    try document.querySelector('meta[itemprop=videoId]').content
+    new URLSearchParams(document.location.search.substring(1)).get('v')
 
 new YouTubeVideoPage
