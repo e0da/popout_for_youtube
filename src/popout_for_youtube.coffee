@@ -35,11 +35,6 @@ class Node
   height: ->
     parseInt @node.offsetHeight
 
-  maintainAlignment: ->
-    setInterval =>
-      @align()
-    , 100
-
   topRightCorner: ->
     x: @offset().left + @width()
     y: @offset().top
@@ -88,6 +83,11 @@ class Button extends Node
 
   remove: ->
     @node.parentNode.removeChild @node
+
+  maintainAlignment: ->
+    setInterval =>
+      @align()
+    , 100
 
 class YouTubeVideoPage
 
