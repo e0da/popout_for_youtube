@@ -111,6 +111,6 @@ class YouTubeVideoPage
     @videoId != @getVideoId()
 
   getVideoId: ->
-    try document.querySelector('meta[itemprop=videoId]').content
+    new URLSearchParams(document.location.search.substring(1)).get('v')
 
 new YouTubeVideoPage
