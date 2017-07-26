@@ -62,9 +62,10 @@ class Video extends Node
 class Button extends Node
 
   constructor: (@video)->
-    button           = document.createElement('button')
-    button.title     = 'Pop out'
-    button.className = 'popout-for-youtube__button'
+    @alignmentInterval = null
+    button             = document.createElement('button')
+    button.title       = 'Pop out'
+    button.className   = 'popout-for-youtube__button'
     super button
     @setClickBehavior()
     @maintainAlignment()
@@ -82,22 +83,27 @@ class Button extends Node
     @node.style.left = "#{point.x}px"
 
   remove: ->
+    clearInterval @alignmentInterval
     @node.parentNode.removeChild @node
 
   maintainAlignment: ->
-    setInterval =>
-      @align()
+    @alignmentInterval = setInterval =>
+      @align() # Can fail if the video node changes. Ignore.
     , 100
 
 class YouTubeVideoPage
 
   constructor: ->
 
+    @previousVideoId = null
+
     @whenVideoChanges =>
-      try @button.remove()
-      @videoId = @getVideoId()
-      @video   = new Video @videoId
-      @button  = new Button @video
+      try @button.remove() # Can fail if the button isn't arleady there. Ignore.
+      @previousVideoId = @newVideoId
+      @newVideoId      = @getVideoId()
+      @video           = new Video @newVideoId
+      @button          = new Button @video
+
       document.body.appendChild @button.node
 
       Extension.notifyVideoViewed()
@@ -105,10 +111,11 @@ class YouTubeVideoPage
   whenVideoChanges: (callback)->
     setInterval =>
       callback() if @videoChanged()
-    , 250
+    , 100
 
   videoChanged: ->
-    @videoId != @getVideoId()
+    newId = @getVideoId()
+    !@video || !@video.node || !@video.node.src || newId != @previousVideoId
 
   getVideoId: ->
     new URLSearchParams(document.location.search.substring(1)).get('v')
