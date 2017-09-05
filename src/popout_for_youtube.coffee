@@ -114,8 +114,7 @@ class YouTubeVideoPage
     , 100
 
   videoChanged: ->
-    newId = @getVideoId()
-    !@video || !@video.node || !@video.node.src || newId != @previousVideoId
+    @getVideoId() != @previousVideoId
 
   getVideoId: ->
     new URLSearchParams(document.location.search.substring(1)).get('v')
