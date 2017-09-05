@@ -1,3 +1,6 @@
+BUTTON_CLASS = 'popout-for-youtube__button'
+HIDDEN_CLASS = "#{BUTTON_CLASS}--hidden"
+
 class Extension
 
   @openPopout: (video)->
@@ -42,7 +45,7 @@ class Node
 class Video extends Node
 
   constructor: (@id)->
-    super document.querySelector('#player video')
+    @waitForVideoNode().then => super @node
 
   pause: ->
     @node.pause()
@@ -59,37 +62,47 @@ class Video extends Node
   togglePlayback: ->
     if @node.paused then @node.play() else @node.pause()
 
+  waitForVideoNode: ->
+    new Promise (resolve)=>
+      setInterval =>
+        resolve() if @node = document.querySelector('#player video')
+      , 100
+
 class Button extends Node
 
   constructor: (@video)->
-    @alignmentInterval = null
+    @styleInterval = null
     button             = document.createElement('button')
     button.title       = 'Pop out'
-    button.className   = 'popout-for-youtube__button'
+    button.className   = "#{BUTTON_CLASS} #{HIDDEN_CLASS}"
     super button
     @setClickBehavior()
-    @maintainAlignment()
+    @maintainStyle()
 
   setClickBehavior: ->
     @node.addEventListener 'click', (event)=>
       @video.pause()
       Extension.openPopout @video
 
-  align: ->
-    @setBottomLeftCorner @video.topRightCorner()
-
   setBottomLeftCorner: (point)->
     @node.style.top  = "#{point.y - @height()}px"
     @node.style.left = "#{point.x}px"
 
   remove: ->
-    clearInterval @alignmentInterval
+    clearInterval @styleInterval
     @node.parentNode.removeChild @node
 
-  maintainAlignment: ->
-    @alignmentInterval = setInterval =>
-      @align() # Can fail if the video node changes. Ignore.
-    , 100
+  maintainStyle: ->
+    @video.waitForVideoNode().then =>
+      @styleInterval = setInterval =>
+        @setDisplay()
+        @setBottomLeftCorner @video.topRightCorner()
+
+  setDisplay: ->
+    if @node.style.top == ''
+      @node.classList.add HIDDEN_CLASS
+    else
+      @node.classList.remove HIDDEN_CLASS
 
 class YouTubeVideoPage
 
