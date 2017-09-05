@@ -1,6 +1,8 @@
 BUTTON_CLASS = 'popout-for-youtube__button'
 HIDDEN_CLASS = "#{BUTTON_CLASS}--hidden"
 
+POLLING_INTERVAL = 250
+
 class Extension
 
   @openPopout: (video)->
@@ -66,7 +68,7 @@ class Video extends Node
     new Promise (resolve)=>
       setInterval =>
         resolve() if @node = document.querySelector('#player video')
-      , 100
+      , POLLING_INTERVAL
 
 class Button extends Node
 
@@ -97,6 +99,7 @@ class Button extends Node
       @styleInterval = setInterval =>
         @setDisplay()
         @setBottomLeftCorner @video.topRightCorner()
+      , POLLING_INTERVAL
 
   setDisplay: ->
     if @node.style.top == ''
@@ -124,7 +127,7 @@ class YouTubeVideoPage
   whenVideoChanges: (callback)->
     setInterval =>
       callback() if @videoChanged()
-    , 100
+    , POLLING_INTERVAL
 
   videoChanged: ->
     @getVideoId() != @previousVideoId
