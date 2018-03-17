@@ -22,8 +22,6 @@ class Extension
 
 class Node
 
-  constructor: (@node)->
-
   offset: ->
     el = @node
     left = top = 0
@@ -46,8 +44,11 @@ class Node
 
 class Video extends Node
 
+  selectVideo = -> document.querySelector('#player video')
+
   constructor: (@id)->
-    @waitForVideoNode().then => super @node
+    super()
+    @waitForVideoNode().then (node)=> @node = node
 
   pause: ->
     @node.pause()
@@ -67,17 +68,19 @@ class Video extends Node
   waitForVideoNode: ->
     new Promise (resolve)=>
       setInterval =>
-        resolve() if @node = document.querySelector('#player video')
+        node = selectVideo()
+        resolve(node) if node
       , POLLING_INTERVAL
 
 class Button extends Node
 
   constructor: (@video)->
+    super()
     @styleInterval = null
     button             = document.createElement('button')
     button.title       = 'Pop out'
     button.className   = "#{BUTTON_CLASS} #{HIDDEN_CLASS}"
-    super button
+    @node = button
     @setClickBehavior()
     @maintainStyle()
 
