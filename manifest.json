@@ -11,23 +11,13 @@
   ],
   "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com https://ssl.google-analytics.com; object-src 'self'",
   "background": {
-    "scripts": [
-      "analytics.js",
-      "lib/background.js"
-    ]
+    "scripts": ["analytics.js", "lib/background.js"]
   },
   "content_scripts": [
     {
-      "matches": [
-        "http://www.youtube.com/*",
-        "https://www.youtube.com/*"
-      ],
-      "js": [
-        "lib/popout_for_youtube.js"
-      ],
-      "css": [
-        "popout_for_youtube.css"
-      ]
+      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
+      "js": ["lib/popout_for_youtube.js"],
+      "css": ["popout_for_youtube.css"]
     }
   ],
   "icons": {

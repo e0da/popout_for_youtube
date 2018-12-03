@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "coffeescript": "^2.3.2"
+  },
+  "scripts": {
+    "build": "cake build",
+    "watch": "cake watch",
+    "zip": "cake zip"
+  }
+}
