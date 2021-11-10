@@ -1,38 +1,35 @@
-(function () {
-  var Popout;
+;(function () {
+  let Popout
 
   Popout = class Popout {
     constructor() {
-      this.name = chrome.i18n.getMessage("name");
-      this.getVideoMetadata(() => {
-        return this.setUpPlayer(() => {
-          return this.loadVideo(() => {
-            return this.loadAPI();
-          });
-        });
-      });
+      this.name = chrome.i18n.getMessage("name")
+      this.getVideoMetadata(() =>
+        this.setUpPlayer(() => this.loadVideo(() => this.loadAPI()))
+      )
     }
 
     loadVideo(callback) {
-      var iframe;
-      iframe = document.createElement("iframe");
-      iframe.id = "player";
-      iframe.title = "YouTube video player iframe";
-      iframe.width = "100%";
-      iframe.height = "100%";
-      iframe.src = `https://www.youtube.com/embed/${this.videoId}?enablejsapi=1`;
-      iframe.setAttribute("frameborder", "0");
-      iframe.setAttribute("allowfullscreen", "");
-      document.body.appendChild(iframe);
-      return callback();
+      let iframe
+      iframe = document.createElement("iframe")
+      iframe.id = "player"
+      iframe.title = "YouTube video player iframe"
+      iframe.width = "100%"
+      iframe.height = "100%"
+      iframe.src = `https://www.youtube.com/embed/${this.videoId}?enablejsapi=1`
+      iframe.setAttribute("frameborder", "0")
+      iframe.setAttribute("allowfullscreen", "")
+      document.body.appendChild(iframe)
+      return callback()
     }
 
     loadAPI() {
-      var firstScript, script;
-      script = document.createElement("script");
-      script.src = "https://www.youtube.com/iframe_api";
-      firstScript = document.getElementsByTagName("script")[0];
-      return firstScript.parentNode.insertBefore(script, firstScript);
+      let firstScript
+      let script
+      script = document.createElement("script")
+      script.src = "https://www.youtube.com/iframe_api"
+      firstScript = document.getElementsByTagName("script")[0]
+      return firstScript.parentNode.insertBefore(script, firstScript)
     }
 
     setUpPlayer(callback) {
@@ -46,37 +43,37 @@
           },
           events: {
             onReady: () => {
-              this.player.seekTo(this.currentTime - 1);
-              return this.player.playVideo();
+              this.player.seekTo(this.currentTime - 1)
+              return this.player.playVideo()
             },
           },
-        });
-        return (window.player = this.player);
-      };
-      return callback();
+        })
+        return (window.player = this.player)
+      }
+      return callback()
     }
 
     getVideoMetadata(callback) {
-      return chrome.windows.getCurrent((window) => {
-        return chrome.extension.sendMessage(
+      return chrome.windows.getCurrent((window) =>
+        chrome.extension.sendMessage(
           {
             action: "getVideoMetadata",
             windowId: window.id,
           },
           (response) => {
-            this.videoId = response.videoId;
-            this.currentTime = response.currentTime;
-            document.title = this.windowTitle(response.title);
-            return callback();
+            this.videoId = response.videoId
+            this.currentTime = response.currentTime
+            document.title = this.windowTitle(response.title)
+            return callback()
           }
-        );
-      });
+        )
+      )
     }
 
     windowTitle(videoTitle) {
-      return videoTitle.replace(/ - YouTube$/, "") + ` - ${this.name}`;
+      return `${videoTitle.replace(/ - YouTube$/, "")} - ${this.name}`
     }
-  };
+  }
 
-  new Popout();
-}.call());
+  new Popout()
+}.call())

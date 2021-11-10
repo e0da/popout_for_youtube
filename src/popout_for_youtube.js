@@ -1,18 +1,18 @@
-(function () {
-  var BUTTON_CLASS,
-    Button,
-    Extension,
-    HIDDEN_CLASS,
-    Node,
-    POLLING_INTERVAL,
-    Video,
-    YouTubeVideoPage;
+;(function () {
+  let BUTTON_CLASS
+  let Button
+  let Extension
+  let HIDDEN_CLASS
+  let Node
+  let POLLING_INTERVAL
+  let Video
+  let YouTubeVideoPage
 
-  BUTTON_CLASS = "popout-for-youtube__button";
+  BUTTON_CLASS = "popout-for-youtube__button"
 
-  HIDDEN_CLASS = `${BUTTON_CLASS}--hidden`;
+  HIDDEN_CLASS = `${BUTTON_CLASS}--hidden`
 
-  POLLING_INTERVAL = 250;
+  POLLING_INTERVAL = 250
 
   Extension = class Extension {
     static openPopout(video) {
@@ -24,227 +24,225 @@
         width: video.width(),
         height: video.height(),
         uniqueId: Extension.uniqueId(),
-      });
+      })
     }
 
     static uniqueId() {
-      return Math.random() ^ new Date().getTime();
+      return Math.random() ^ new Date().getTime()
     }
 
     static notifyVideoViewed() {
       return chrome.extension.sendMessage({
         action: "videoViewed",
-      });
+      })
     }
-  };
+  }
 
   Node = class Node {
     offset() {
-      var el, left, top;
-      el = this.node;
-      left = top = 0;
+      let el
+      let left
+      let top
+      el = this.node
+      left = top = 0
       while (true) {
-        left += el.offsetLeft;
-        top += el.offsetTop;
+        left += el.offsetLeft
+        top += el.offsetTop
         if (!(el = el.offsetParent)) {
-          break;
+          break
         }
       }
       return {
-        left: left,
-        top: top,
-      };
+        left,
+        top,
+      }
     }
 
     width() {
-      return parseInt(this.node.offsetWidth);
+      return parseInt(this.node.offsetWidth)
     }
 
     height() {
-      return parseInt(this.node.offsetHeight);
+      return parseInt(this.node.offsetHeight)
     }
 
     topRightCorner() {
       return {
         x: this.offset().left + this.width(),
         y: this.offset().top,
-      };
+      }
     }
-  };
+  }
 
   Video = function () {
-    var selectVideo;
+    let selectVideo
 
     class Video extends Node {
       constructor(id, title) {
-        super();
-        this.id = id;
-        this.title = title;
-        this.waitForVideoNode().then((node) => {
-          return (this.node = node);
-        });
+        super()
+        this.id = id
+        this.title = title
+        this.waitForVideoNode().then((node) => (this.node = node))
       }
 
       pause() {
-        return this.node.pause();
+        return this.node.pause()
       }
 
       play() {
-        return this.node.play();
+        return this.node.play()
       }
 
       currentTime() {
-        return this.node.currentTime;
+        return this.node.currentTime
       }
 
       seekTo(time) {
-        return (this.node.currentTime = time);
+        return (this.node.currentTime = time)
       }
 
       togglePlayback() {
         if (this.node.paused) {
-          return this.node.play();
-        } else {
-          return this.node.pause();
+          return this.node.play()
         }
+        return this.node.pause()
       }
 
       waitForVideoNode() {
-        return new Promise((resolve) => {
-          return setInterval(() => {
-            var node;
-            node = selectVideo();
+        return new Promise((resolve) =>
+          setInterval(() => {
+            let node
+            node = selectVideo()
             if (node) {
-              return resolve(node);
+              return resolve(node)
             }
-          }, POLLING_INTERVAL);
-        });
+          }, POLLING_INTERVAL)
+        )
       }
     }
 
     selectVideo = function () {
-      return document.querySelector("#player video");
-    };
+      return document.querySelector("#player video")
+    }
 
-    return Video;
-  }.call(this);
+    return Video
+  }.call(this)
 
   Button = class Button extends Node {
     constructor(video1) {
-      var button, buttonText;
-      super();
-      this.video = video1;
-      buttonText = chrome.i18n.getMessage("buttonText");
-      this.styleInterval = null;
-      button = document.createElement("button");
-      button.title = buttonText;
-      button.className = `${BUTTON_CLASS} ${HIDDEN_CLASS}`;
-      this.node = button;
-      this.setClickBehavior();
-      this.maintainStyle();
+      let button
+      let buttonText
+      super()
+      this.video = video1
+      buttonText = chrome.i18n.getMessage("buttonText")
+      this.styleInterval = null
+      button = document.createElement("button")
+      button.title = buttonText
+      button.className = `${BUTTON_CLASS} ${HIDDEN_CLASS}`
+      this.node = button
+      this.setClickBehavior()
+      this.maintainStyle()
     }
 
     setClickBehavior() {
       return this.node.addEventListener("click", (event) => {
-        this.video.pause();
-        return Extension.openPopout(this.video);
-      });
+        this.video.pause()
+        return Extension.openPopout(this.video)
+      })
     }
 
     setBottomLeftCorner(point) {
-      this.node.style.top = `${point.y - this.height()}px`;
-      return (this.node.style.left = `${point.x}px`);
+      this.node.style.top = `${point.y - this.height()}px`
+      return (this.node.style.left = `${point.x}px`)
     }
 
     remove() {
-      clearInterval(this.styleInterval);
-      return this.node.parentNode.removeChild(this.node);
+      clearInterval(this.styleInterval)
+      return this.node.parentNode.removeChild(this.node)
     }
 
     maintainStyle() {
-      return this.video.waitForVideoNode().then(() => {
-        return (this.styleInterval = setInterval(() => {
-          this.setDisplay();
-          return this.setBottomLeftCorner(this.video.topRightCorner());
-        }, POLLING_INTERVAL));
-      });
+      return this.video.waitForVideoNode().then(
+        () =>
+          (this.styleInterval = setInterval(() => {
+            this.setDisplay()
+            return this.setBottomLeftCorner(this.video.topRightCorner())
+          }, POLLING_INTERVAL))
+      )
     }
 
     setDisplay() {
       if (this.node.style.top === "") {
-        return this.node.classList.add(HIDDEN_CLASS);
-      } else {
-        return this.node.classList.remove(HIDDEN_CLASS);
+        return this.node.classList.add(HIDDEN_CLASS)
       }
+      return this.node.classList.remove(HIDDEN_CLASS)
     }
-  };
+  }
 
   YouTubeVideoPage = class YouTubeVideoPage {
-    #onvideo = () => {};
+    #onvideo = () => {}
 
     constructor() {
-      this.previousVideoId = null;
-      this.previousTitle = null;
+      this.previousVideoId = null
+      this.previousTitle = null
       this.onVideo(() => {
-        this.title = document.title;
-        this.video = new Video(this.newVideoId, this.title);
-        this.button = new Button(this.video);
-        document.body.appendChild(this.button.node);
-        Extension.notifyVideoViewed();
-      });
+        this.title = document.title
+        this.video = new Video(this.newVideoId, this.title)
+        this.button = new Button(this.video)
+        document.body.appendChild(this.button.node)
+        Extension.notifyVideoViewed()
+      })
       this.onTitle(() => {
-        this.title = document.title;
-        this.onVideo();
-      });
+        this.title = document.title
+        this.onVideo()
+      })
       this.onVideoId(() => {
         try {
-          this.button.remove(); // Can fail if the button isn't arleady there. Ignore.
+          this.button.remove() // Can fail if the button isn't arleady there. Ignore.
         } catch (error) {}
-        this.previousVideoId = this.newVideoId;
-        this.newVideoId = this.getVideoId();
-        this.onVideo();
-      });
+        this.previousVideoId = this.newVideoId
+        this.newVideoId = this.getVideoId()
+        this.onVideo()
+      })
     }
 
     onVideo(callback) {
-      if (callback) this.onvideo = callback;
-      else this.onvideo();
+      if (callback) this.onvideo = callback
+      else this.onvideo()
     }
 
     onVideoId(callback) {
       return setInterval(() => {
         if (this.videoChanged()) {
-          return callback();
+          return callback()
         }
-      }, POLLING_INTERVAL);
+      }, POLLING_INTERVAL)
     }
 
     onTitle(callback) {
       return setInterval(() => {
         if (this.titleChanged()) {
-          return callback();
+          return callback()
         }
-      }, POLLING_INTERVAL);
+      }, POLLING_INTERVAL)
     }
 
     videoChanged() {
-      return this.getVideoId() !== this.previousVideoId;
+      return this.getVideoId() !== this.previousVideoId
     }
 
     titleChanged() {
-      return this.getTitle() !== this.previousTitle;
+      return this.getTitle() !== this.previousTitle
     }
 
     getVideoId() {
-      return new URLSearchParams(document.location.search.substring(1)).get(
-        "v"
-      );
+      return new URLSearchParams(document.location.search.substring(1)).get("v")
     }
 
     getTitle() {
-      return document.title;
+      return document.title
     }
-  };
+  }
 
-  new YouTubeVideoPage();
-}.call());
+  new YouTubeVideoPage()
+}.call())

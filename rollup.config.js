@@ -1,4 +1,4 @@
-const sources = "background popout_for_youtube popout".split(" ");
+const sources = "background popout_for_youtube popout".split(" ")
 
 const config = sources.map((name) => ({
   input: `src/${name}.js`,
@@ -6,6 +6,6 @@ const config = sources.map((name) => ({
     file: `lib/${name}.js`,
     format: "iife",
   },
-}));
+}))
 
-module.exports = config;
+module.exports = config
