@@ -1,8 +1,19 @@
 # CHANGELOG
 
-## 5.2.0
+## 6.0.0
+
+### Features
 
 - Include the video title in the popout window title
-- Fix some build issues, default to npm > yarn
-- Port from CoffeeScript+Cake to JavaScript+Rollup
+
+### Bugfixes
+
+- Fix some build issues
+
+### Refactors
+
+- Use npm instead of yarn
+- Port build system from CoffeeScript via Cake to JavaScript via Rollup
 - Lint, prettify, etc.
+- Extract side effects to explicit bundle files
+- Use more async

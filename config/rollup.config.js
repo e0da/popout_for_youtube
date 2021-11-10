@@ -1,7 +1,7 @@
-const sources = ["analytics", "background", "popout_for_youtube", "popout"]
+const sources = ["analytics", "background", "popout", "videoPage"]
 
 const config = sources.map((name) => ({
-  input: `src/${name}.js`,
+  input: `src/bundles/${name}Bundle.js`,
   output: {
     file: `build/${name}.bundle.js`,
     format: "iife",

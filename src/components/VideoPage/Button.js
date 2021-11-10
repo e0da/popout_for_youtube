@@ -2,7 +2,7 @@ import { POLLING_INTERVAL } from "./constants"
 import { Extension } from "./Extension"
 import { NodeComponent } from "./NodeComponent"
 
-const BUTTON_CLASS = "popout-for-youtube__button"
+const BUTTON_CLASS = "popout__button"
 
 const HIDDEN_CLASS = `${BUTTON_CLASS}--hidden`
 

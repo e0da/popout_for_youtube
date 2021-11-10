@@ -17,10 +17,6 @@ Chrome, Microsoft Edge, Vivaldi, and others
 
 The source code is managed on GitHub at <http://github.com/e0da/popout_for_youtube>
 
-```sh
-npm install
-```
-
 ## Developing
 
 ```sh
@@ -46,7 +42,7 @@ Thanks to the following developers for their contributions to the project!
 
 - [sjb933][] - [#46][pr46]
 
-[pr46]: https://github.com/justinforce/popout_for_youtube/pull/46
+[pr46]: https://github.com/e0da/popout_for_youtube/pull/46
 [sjb933]: https://github.com/sjb933
 
 ## Copyright and License

@@ -1,4 +1,4 @@
-.popout-for-youtube__button {
+.popout__button {
   outline: none;
   text-indent: -999em;
   width: 29px;
@@ -24,7 +24,7 @@
   transition: visibility 0s, opacity 350ms ease-in;
 }
 
-.popout-for-youtube__button--hidden {
+.popout__button--hidden {
   /* [v] visibility animation */
   visibility: hidden;
   opacity: 0;
@@ -33,7 +33,7 @@
 video {
   /*
    * [z] Ensure button is below video. Make this higher than
-   * .popout-for-youtube__button
+   * .popout__button
    */
   z-index: 3000;
 }

@@ -4,8 +4,8 @@
   },
   "content_scripts": [
     {
-      "css": ["build/popout_for_youtube.css"],
-      "js": ["build/popout_for_youtube.bundle.js"],
+      "css": ["build/videoPage.css"],
+      "js": ["build/videoPage.bundle.js"],
       "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"]
     }
   ],
@@ -23,5 +23,5 @@
     "http://www.youtube.com/*",
     "https://www.youtube.com/*"
   ],
-  "version": "5.2.0"
+  "version": "6.0.0"
 }
