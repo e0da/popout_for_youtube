@@ -180,26 +180,48 @@
   };
 
   YouTubeVideoPage = class YouTubeVideoPage {
+    #onvideo = () => {};
+
     constructor() {
       this.previousVideoId = null;
-      this.title = document.title;
-      this.whenVideoChanges(() => {
+      this.previousTitle = null;
+      this.onVideo(() => {
+        this.title = document.title;
+        this.video = new Video(this.newVideoId, this.title);
+        this.button = new Button(this.video);
+        document.body.appendChild(this.button.node);
+        Extension.notifyVideoViewed();
+      });
+      this.onTitle(() => {
+        this.title = document.title;
+        this.onVideo();
+      });
+      this.onVideoId(() => {
         try {
           this.button.remove(); // Can fail if the button isn't arleady there. Ignore.
         } catch (error) {}
         this.previousVideoId = this.newVideoId;
         this.newVideoId = this.getVideoId();
-        this.title = document.title;
-        this.video = new Video(this.newVideoId, this.title);
-        this.button = new Button(this.video);
-        document.body.appendChild(this.button.node);
-        return Extension.notifyVideoViewed();
+        this.onVideo();
       });
     }
 
-    whenVideoChanges(callback) {
+    onVideo(callback) {
+      if (callback) this.onvideo = callback;
+      else this.onvideo();
+    }
+
+    onVideoId(callback) {
       return setInterval(() => {
         if (this.videoChanged()) {
+          return callback();
+        }
+      }, POLLING_INTERVAL);
+    }
+
+    onTitle(callback) {
+      return setInterval(() => {
+        if (this.titleChanged()) {
           return callback();
         }
       }, POLLING_INTERVAL);
@@ -209,10 +231,18 @@
       return this.getVideoId() !== this.previousVideoId;
     }
 
+    titleChanged() {
+      return this.getTitle() !== this.previousTitle;
+    }
+
     getVideoId() {
       return new URLSearchParams(document.location.search.substring(1)).get(
         "v"
       );
+    }
+
+    getTitle() {
+      return document.title;
     }
   };
 

@@ -18,7 +18,7 @@
     "dev:browser-tabs": "open https://youtube.com",
     "dev:localtunnel": "lt --port ${PORT:-3000}",
     "dev:rollup:build:watch": "npm run dev:rollup:build -- --watch",
-    "dev:rollup:build": "npm run dev:rollup",
+    "dev:rollup:build": "npm run dev:rollup --",
     "dev:rollup": "rollup --config rollup.config.js",
     "dev:serve": "serve --listen ${PORT:-3000}",
     "dev": "concurrently npm:build:dev:watch npm:start:dev npm:dev:browser-tabs",
