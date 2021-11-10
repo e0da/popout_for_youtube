@@ -4,8 +4,8 @@
     <title>Popout for YouTube&trade;</title>
     <meta charset="utf-8" />
     <script integrity="sha256-a8+2632l8xj7tUo/WDvmo7txXq2yxS6As937XLPG9fM=">
-      const name = chrome.i18n.getMessage("name");
-      document.title = name;
+      const name = chrome.i18n.getMessage("name")
+      document.title = name
     </script>
     <style>
       html,
@@ -27,5 +27,8 @@
   </head>
   <body>
     <script src="lib/popout.js"></script>
+    <script>
+      new Popout()
+    </script>
   </body>
 </html>

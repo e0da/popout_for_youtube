@@ -1,7 +1,7 @@
-var _gaq = _gaq || []
+var _gaq = _gaq || [] // eslint-disable-line
 _gaq.push(["_setAccount", "UA-21885508-1"])
 _gaq.push(["_trackPageview"])
-;(function () {
+;(() => {
   const ga = document.createElement("script")
   ga.type = "text/javascript"
   ga.async = true
