@@ -1,17 +1,4 @@
 {
-  "devDependencies": {
-    "coffeescript": "^2.3.2",
-    "concurrently": "^6.3.0",
-    "eslint": "^8.2.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.3",
-    "localtunnel": "^2.0.2",
-    "node-jq": "^2.0.0",
-    "prettier": "^2.4.1",
-    "rollup": "^2.59.0",
-    "serve": "^13.0.2"
-  },
   "scripts": {
     "build:dev:watch": "npm run dev:rollup:build:watch",
     "build:dev": "npm run dev:rollup:build",
@@ -43,5 +30,17 @@
     "start:prod": "npm run start:dev",
     "start": "npm run start:prod",
     "zip": "npm run rollup:zip"
+  },
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "localtunnel": "^2.0.2",
+    "node-jq": "^2.0.0",
+    "prettier": "^2.4.1",
+    "rollup": "^2.59.0",
+    "serve": "^13.0.2"
   }
 }
