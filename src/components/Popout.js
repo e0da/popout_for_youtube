@@ -1,22 +1,17 @@
-function loadYouTubeAPI() {
-  const script = document.createElement("script")
-  script.src = "https://www.youtube.com/iframe_api"
-  const firstScript = document.getElementsByTagName("script")[0]
-  return firstScript.parentNode.insertBefore(script, firstScript)
-}
+import { loadYouTubeAPI } from "./Popout/loadYouTubeAPI"
 
 export class Popout {
   constructor() {
     this.name = chrome.i18n.getMessage("name")
   }
 
-  mount() {
+  mount = () => {
     this.getVideoMetadata(() =>
       this.setUpPlayer(() => this.loadVideo(() => loadYouTubeAPI()))
     )
   }
 
-  loadVideo(callback) {
+  loadVideo = (callback) => {
     const iframe = document.createElement("iframe")
     iframe.id = "player"
     iframe.title = "YouTube video player iframe"
@@ -26,10 +21,10 @@ export class Popout {
     iframe.setAttribute("frameborder", "0")
     iframe.setAttribute("allowfullscreen", "")
     document.body.appendChild(iframe)
-    return callback()
+    callback()
   }
 
-  setUpPlayer(callback) {
+  setUpPlayer = (callback) => {
     window.onYouTubeIframeAPIReady = () => {
       this.player = new YT.Player("player", {
         height: this.height,
@@ -47,10 +42,10 @@ export class Popout {
       })
       window.player = this.player
     }
-    return callback()
+    callback()
   }
 
-  getVideoMetadata(callback) {
+  getVideoMetadata = (callback) => {
     chrome.windows.getCurrent((window) =>
       chrome.extension.sendMessage(
         {
@@ -67,8 +62,7 @@ export class Popout {
     )
   }
 
-  windowTitle(videoTitle) {
-    return `${videoTitle.replace(/ - YouTube$/, "")} - ${this.name}`
-  }
+  windowTitle = (videoTitle) =>
+    `${videoTitle.replace(/ - YouTube$/, "")} - ${this.name}`
 }
 export default Popout
