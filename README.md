@@ -16,18 +16,18 @@ http://github.com/sidewaysmilk/popout_for_youtube .
 
 ## Development Requirements
 
-You need a `zip` bin in your path and yarn or npm.
+You need a `zip` bin in your path and npm or yarn.
 
 ```sh
-yarn install
+npm install
 ```
 
 ## Compiling
 
-Run `yarn run` for a list of tasks. These are the big ones.
+Run `npm run` for a list of tasks. These are the big ones.
 
-- `yarn build` - compiles the CoffeeScript to JavaScript
-- `yarn zip` - `yarn build` then prepares the Chrome extension as a zip file
+- `npm run build` - compiles the CoffeeScript to JavaScript
+- `npm run zip` - `npm run build` then prepares the Chrome extension as a zip file
 
 ## Contributions
 

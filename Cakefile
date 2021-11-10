@@ -1,6 +1,5 @@
 fs = require 'fs'
 
-{print} = require 'util'
 {spawn, exec} = require 'child_process'
 
 pkg_files = [
@@ -15,29 +14,29 @@ pkg_files = [
   'README.md'
 ].join ' '
 
-version = ->
+version = =>
   JSON.parse(fs.readFileSync('manifest.json')).version
 
-zip_out = ->
+zip_out = =>
   "pkg/popout_for_youtube-#{version()}.zip"
 
-build = (watch=false) ->
+build = (watch=false) =>
   options = ['-w', '-c', '-o', 'lib', 'src']
   options.shift '-w' unless watch
   coffee = spawn 'coffee', options
-  coffee.stderr.on 'data', (data) ->
+  coffee.stderr.on 'data', (data) =>
     process.stderr.write data.toString()
-  coffee.stdout.on 'data', (data) ->
-    print data.toString()
+  coffee.stdout.on 'data', (data) =>
+    console.log data.toString()
 
-zip = ->
+zip = =>
   try fs.mkdirSync 'pkg', 0o0755
   exec "zip -r #{zip_out()} #{pkg_files}"
 
-task 'build', 'build all CoffeeScript in src to JavaScript in lib', ->
+task 'build', 'build all CoffeeScript in src to JavaScript in lib', =>
   build()
-task 'watch', 'watch for changes to CoffeeScript in src and build to JavaScript in lib', ->
+task 'watch', 'watch for changes to CoffeeScript in src and build to JavaScript in lib', =>
   build true
-task 'zip', "build an upload-ready Chrome extension to #{zip_out()}", ->
+task 'zip', "build an upload-ready Chrome extension to #{zip_out()}", =>
   build()
   zip()

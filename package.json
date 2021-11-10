@@ -6,5 +6,8 @@
     "build": "cake build",
     "watch": "cake watch",
     "zip": "cake zip"
+  },
+  "dependencies": {
+    "yarn": "^1.22.17"
   }
 }

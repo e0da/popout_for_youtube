@@ -3,8 +3,14 @@
   <head>
     <title>Popout for YouTube&trade;</title>
     <meta charset="utf-8" />
+    <script integrity="sha256-a8+2632l8xj7tUo/WDvmo7txXq2yxS6As937XLPG9fM=">
+      const name = chrome.i18n.getMessage("name");
+      document.title = name;
+    </script>
     <style>
-      html, body, iframe {
+      html,
+      body,
+      iframe {
         height: 100%;
         width: 100%;
       }

@@ -5,19 +5,20 @@ POLLING_INTERVAL = 250
 
 class Extension
 
-  @openPopout: (video)->
+  @openPopout: (video)=>
     chrome.extension.sendMessage
       action:       'openPopout'
+      title:        video.title
       videoId:      video.id
       currentTime:  video.currentTime()
       width:        video.width()
       height:       video.height()
       uniqueId:     @uniqueId()
 
-  @uniqueId: ->
+  @uniqueId: =>
     Math.random() ^ new Date().getTime()
 
-  @notifyVideoViewed: ->
+  @notifyVideoViewed: =>
     chrome.extension.sendMessage action: 'videoViewed'
 
 class Node
@@ -46,7 +47,7 @@ class Video extends Node
 
   selectVideo = -> document.querySelector('#player video')
 
-  constructor: (@id)->
+  constructor: (@id, @title)->
     super()
     @waitForVideoNode().then (node)=> @node = node
 
@@ -76,9 +77,10 @@ class Button extends Node
 
   constructor: (@video)->
     super()
+    buttonText = chrome.i18n.getMessage('buttonText')
     @styleInterval = null
     button             = document.createElement('button')
-    button.title       = 'Pop out'
+    button.title       = buttonText
     button.className   = "#{BUTTON_CLASS} #{HIDDEN_CLASS}"
     @node = button
     @setClickBehavior()
@@ -115,12 +117,14 @@ class YouTubeVideoPage
   constructor: ->
 
     @previousVideoId = null
+    @title = document.title
 
     @whenVideoChanges =>
       try @button.remove() # Can fail if the button isn't arleady there. Ignore.
       @previousVideoId = @newVideoId
       @newVideoId      = @getVideoId()
-      @video           = new Video @newVideoId
+      @title           = document.title
+      @video           = new Video @newVideoId, @title
       @button          = new Button @video
 
       document.body.appendChild @button.node
