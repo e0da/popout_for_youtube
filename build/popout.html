@@ -3,10 +3,6 @@
   <head>
     <title>Popout for YouTube&trade;</title>
     <meta charset="utf-8" />
-    <script integrity="sha256-a8+2632l8xj7tUo/WDvmo7txXq2yxS6As937XLPG9fM=">
-      const name = chrome.i18n.getMessage("name")
-      document.title = name
-    </script>
     <style>
       html,
       body,
@@ -23,10 +19,7 @@
         border: none !important;
       }
     </style>
-    <script src="analytics.js"></script>
-    <script src="popout.js"></script>
-    <script integrity="sha256-1BvDz0NbjtaFhekukyNqnw2AJ/Ad6jAkx+tEJsns978=">
-      new Popout().mount()
-    </script>
+    <script src="analytics.bundle.js"></script>
+    <script src="popout.bundle.js"></script>
   </head>
 </html>

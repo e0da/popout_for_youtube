@@ -1,20 +1,23 @@
-import { loadYouTubeAPI } from "./Popout/loadYouTubeAPI"
+import { loadPlayerAPI } from "./Popout/loadPlayerAPI"
 
 export class Popout {
   constructor() {
     this.name = chrome.i18n.getMessage("name")
   }
 
-  mount = () => {
-    this.getVideoMetadata(() =>
-      this.setUpPlayer(() => this.loadVideo(() => loadYouTubeAPI()))
-    )
+  mount = async () => {
+    await this.getVideoMetadata()
+    this.setUpPlayer(() => {
+      this.loadVideo(() => {
+        loadPlayerAPI()
+      })
+    })
   }
 
   loadVideo = (callback) => {
     const iframe = document.createElement("iframe")
     iframe.id = "player"
-    iframe.title = "YouTube video player iframe"
+    iframe.title = "Video Player"
     iframe.width = "100%"
     iframe.height = "100%"
     iframe.src = `https://www.youtube.com/embed/${this.videoId}?enablejsapi=1`
@@ -45,7 +48,7 @@ export class Popout {
     callback()
   }
 
-  getVideoMetadata = (callback) => {
+  getVideoMetadata = async () => {
     chrome.windows.getCurrent((window) =>
       chrome.extension.sendMessage(
         {
@@ -56,7 +59,6 @@ export class Popout {
           this.videoId = response.videoId
           this.currentTime = response.currentTime
           document.title = this.windowTitle(response.title)
-          callback()
         }
       )
     )

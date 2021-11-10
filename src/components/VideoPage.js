@@ -1,7 +1,7 @@
-import { Extension } from "./YouTubeVideoPage/Extension"
-import { Video } from "./YouTubeVideoPage/Video"
-import { Button } from "./YouTubeVideoPage/Button"
 import { POLLING_INTERVAL } from "./constants"
+import { Button } from "./VideoPage/Button"
+import { Extension } from "./VideoPage/Extension"
+import { Video } from "./VideoPage/Video"
 
 function getVideoId() {
   return new URLSearchParams(document.location.search.substring(1)).get("v")
@@ -11,7 +11,7 @@ function getTitle() {
   return document.title
 }
 
-export class YouTubeVideoPage {
+export class VideoPage {
   #onvideo = () => {} // eslint-disable-line class-methods-use-this
 
   constructor() {
@@ -73,4 +73,4 @@ export class YouTubeVideoPage {
   }
 }
 
-export default YouTubeVideoPage
+export default VideoPage

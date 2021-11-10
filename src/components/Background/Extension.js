@@ -8,7 +8,7 @@ export class Extension {
   }
 
   static reportButtonClick() {
-    this.trackEvent("YouTubeVideoPage", "popoutButtonClick")
+    this.trackEvent("VideoPage", "popoutButtonClick")
   }
 
   static trackEvent(category, action, value) {
@@ -18,7 +18,7 @@ export class Extension {
   }
 
   static reportVideoViewed() {
-    this.trackEvent("YouTubeVideoPage", "videoViewed")
+    this.trackEvent("VideoPage", "videoViewed")
   }
 }
 export default Extension
