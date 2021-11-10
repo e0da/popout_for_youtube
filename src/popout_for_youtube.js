@@ -1,3 +1,3 @@
-import { YouTubeVideoPage } from "./components"
+import { YouTubeVideoPage } from "./components";
 
-new YouTubeVideoPage().mount()
+new YouTubeVideoPage().mount();

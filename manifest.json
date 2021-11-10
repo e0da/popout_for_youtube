@@ -1,11 +1,11 @@
 {
   "background": {
-    "scripts": ["lib/analytics.js", "lib/background.js"]
+    "scripts": ["build/analytics.bundle.js", "build/background.bundle.js"]
   },
   "content_scripts": [
     {
-      "css": ["popout_for_youtube.css"],
-      "js": ["lib/popout_for_youtube.js"],
+      "css": ["build/popout_for_youtube.css"],
+      "js": ["build/popout_for_youtube.bundle.js"],
       "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"]
     }
   ],
@@ -13,8 +13,8 @@
   "default_locale": "en",
   "description": "__MSG_description__",
   "icons": {
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "48": "build/images/icon48.png",
+    "128": "build/images/icon128.png"
   },
   "manifest_version": 2,
   "name": "__MSG_name__",

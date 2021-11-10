@@ -1,3 +1,3 @@
-import { Background } from "./components"
+import { Background } from "./components";
 
-new Background().mount()
+new Background().mount();

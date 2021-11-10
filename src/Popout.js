@@ -1,3 +1,3 @@
-import { Popout } from "./components"
+import { Popout } from "./components";
 
-new Popout().mount()
+new Popout().mount();
