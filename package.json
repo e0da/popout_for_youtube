@@ -1,13 +1,31 @@
 {
   "devDependencies": {
-    "coffeescript": "^2.3.2"
+    "coffeescript": "^2.3.2",
+    "concurrently": "^6.3.0",
+    "localtunnel": "^2.0.2",
+    "node-jq": "^2.0.0",
+    "rollup": "^2.59.0",
+    "serve": "^13.0.2"
   },
   "scripts": {
-    "build": "cake build",
-    "watch": "cake watch",
-    "zip": "cake zip"
-  },
-  "dependencies": {
-    "yarn": "^1.22.17"
+    "dev": "concurrently npm:watch npm:start npm:browser-tabs",
+    "start": "concurrently npm:serve npm:localtunnel",
+    "build": "npm run rollup-build",
+    "watch": "npm run rollup-watch",
+    "zip": "npm run rollup-zip",
+    "serve": "serve --listen ${PORT:-3000}",
+    "browser-tabs": "open https://youtube.com && open chrome://extensions",
+    "localtunnel": "lt --port ${PORT:-3000}",
+    "cake-build": "cake build",
+    "cake-watch": "cake watch",
+    "cake-zip": "cake zip",
+    "rollup": "rollup --config rollup.config.js",
+    "rollup-build": "npm run rollup",
+    "rollup-watch": "npm run rollup -- --watch",
+    "rollup-zip": "npm run shell-zip",
+    "version": "jq .version manifest.json",
+    "pkg-path": "echo pkg/popout_for_youtube-$(npm run version).zip",
+    "pkg-src": "echo _locales images lib analytics.js LICENSE manifest.json popout.html popout_for_youtube.css README.md",
+    "shell-zip": "zip -s $(npm run pkg-path) $(npm run pkg-src)"
   }
 }

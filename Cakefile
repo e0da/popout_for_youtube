@@ -1,3 +1,5 @@
+# vi: set filetype=coffee
+
 fs = require 'fs'
 
 {spawn, exec} = require 'child_process'
