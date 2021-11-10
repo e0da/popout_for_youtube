@@ -9,6 +9,7 @@
 ### Bugfixes
 
 - Fix some build issues
+- Reintroduce `_locales` strings for en and es locales
 
 ### Refactors
 
@@ -17,3 +18,4 @@
 - Lint, prettify, etc.
 - Extract side effects to explicit bundle files
 - Use more async
+- Minimize use of brand names
