@@ -7,70 +7,38 @@ function getVideoId() {
   return new URLSearchParams(document.location.search.substring(1)).get("v")
 }
 
-function getTitle() {
-  return document.title
-}
-
 export class VideoPage {
   #onvideo = () => {} // eslint-disable-line class-methods-use-this
 
-  constructor() {
-    this.previousVideoId = null
-    this.previousTitle = null
-  }
+  title = document.title
 
-  mount() {
-    this.onVideo(() => {
-      this.title = document.title
-      this.video = new Video(this.newVideoId, this.title)
-      this.button = new Button(this.video)
-      document.body.appendChild(this.button.node)
-      Extension.notifyVideoViewed()
-    })
-    this.onTitle(() => {
-      this.title = document.title
-      this.onVideo()
-    })
-    this.onVideoId(() => {
-      try {
-        this.button.remove()
-      } catch (error) {
-        // Can fail if the button isn't arleady there. Ignore.
-      }
-      this.previousVideoId = this.newVideoId
-      this.newVideoId = getVideoId()
-      this.onVideo()
-    })
-  }
+  previousVideoId = null
 
-  onVideo(callback) {
-    if (callback) this.onvideo = callback
-    else this.onvideo()
-  }
+  previousTitle = null
 
-  onVideoId(callback) {
+  mount = () => {
     setInterval(() => {
-      if (this.videoChanged()) {
-        callback()
+      if (this.videoChanged() || this.titleChanged()) {
+        Extension.notifyVideoViewed()
+        try {
+          this.button.remove()
+        } catch (error) {
+          // Can fail if the button isn't arleady there. Ignore.
+        }
+        this.previousTitle = this.title
+        this.title = document.title
+        this.video = new Video(this.newVideoId, this.title)
+        this.button = new Button(this.video)
+        this.previousVideoId = this.newVideoId
+        this.newVideoId = getVideoId()
+        document.body.appendChild(this.button.node)
       }
     }, POLLING_INTERVAL)
   }
 
-  onTitle(callback) {
-    setInterval(() => {
-      if (this.titleChanged()) {
-        callback()
-      }
-    }, POLLING_INTERVAL)
-  }
+  videoChanged = () => getVideoId() !== this.previousVideoId
 
-  videoChanged() {
-    return getVideoId() !== this.previousVideoId
-  }
-
-  titleChanged() {
-    return getTitle() !== this.previousTitle
-  }
+  titleChanged = () => document.title !== this.previousTitle
 }
 
 export default VideoPage

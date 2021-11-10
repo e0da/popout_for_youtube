@@ -5,11 +5,12 @@ export class Popout {
     this.name = chrome.i18n.getMessage("name")
   }
 
-  mount = async () => {
-    await this.getVideoMetadata()
-    this.setUpPlayer(() => {
-      this.loadVideo(() => {
-        loadPlayerAPI()
+  mount = () => {
+    this.getVideoMetadata(() => {
+      this.setUpPlayer(() => {
+        this.loadVideo(() => {
+          loadPlayerAPI()
+        })
       })
     })
   }
@@ -48,7 +49,7 @@ export class Popout {
     callback()
   }
 
-  getVideoMetadata = async () => {
+  getVideoMetadata = (callback) => {
     chrome.windows.getCurrent((window) =>
       chrome.extension.sendMessage(
         {
@@ -59,6 +60,7 @@ export class Popout {
           this.videoId = response.videoId
           this.currentTime = response.currentTime
           document.title = this.windowTitle(response.title)
+          callback()
         }
       )
     )
