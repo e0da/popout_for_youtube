@@ -8,18 +8,18 @@ export class Extension {
       width: video.width(),
       height: video.height(),
       uniqueId: Extension.uniqueId(),
-    });
+    })
   }
 
   static uniqueId() {
-    return Math.random() ^ new Date().getTime(); // eslint-disable-line no-bitwise
+    return Math.random() ^ new Date().getTime() // eslint-disable-line no-bitwise
   }
 
   static notifyVideoViewed() {
     return chrome.extension.sendMessage({
       action: "videoViewed",
-    });
+    })
   }
 }
 
-export default Extension;
+export default Extension

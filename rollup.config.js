@@ -1,4 +1,4 @@
-const sources = ["analytics", "background", "popout_for_youtube", "popout"];
+const sources = ["analytics", "background", "popout_for_youtube", "popout"]
 
 const config = sources.map((name) => ({
   input: `src/${name}.js`,
@@ -6,6 +6,6 @@ const config = sources.map((name) => ({
     file: `build/${name}.bundle.js`,
     format: "iife",
   },
-}));
+}))
 
-module.exports = config;
+module.exports = config
