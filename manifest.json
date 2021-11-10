@@ -11,17 +11,25 @@
   ],
   "content_security_policy": "script-src 'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com https://ssl.google-analytics.com; object-src 'self'",
   "background": {
-    "scripts": ["analytics.js", "lib/background.js"]
+    "scripts": ["build/analytics.bundle.js", "build/background.bundle.js"]
   },
   "content_scripts": [
     {
-      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
-      "js": ["lib/popout_for_youtube.js"],
-      "css": ["popout_for_youtube.css"]
+      "css": ["build/videoPage.css"],
+      "js": ["build/videoPage.bundle.js"],
+      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"]
     }
   ],
   "icons": {
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
-  }
+    "48": "build/images/icon48.png",
+    "128": "build/images/icon128.png"
+  },
+  "manifest_version": 2,
+  "name": "__MSG_name__",
+  "permissions": [
+    "tabs",
+    "http://www.youtube.com/*",
+    "https://www.youtube.com/*"
+  ],
+  "version": "6.0.0"
 }
