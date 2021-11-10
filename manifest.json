@@ -1,6 +1,6 @@
 {
   "background": {
-    "scripts": ["analytics.js", "lib/background.js"]
+    "scripts": ["lib/analytics.js", "lib/background.js"]
   },
   "content_scripts": [
     {

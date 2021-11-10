@@ -1,4 +1,4 @@
-const sources = "background popout_for_youtube popout".split(" ")
+const sources = ["analytics", "background", "popout_for_youtube", "popout"]
 
 const config = sources.map((name) => ({
   input: `src/${name}.js`,
