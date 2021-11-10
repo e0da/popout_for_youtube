@@ -10,24 +10,31 @@ Store](https://chrome.google.com/webstore/detail/pofekaindcmmojfnfgbpklepkjfilce
 
 ## Implementation
 
-Popout for YouTube™ is written in [CoffeeScript](http://coffeescript.org). The
-source code is managed on GitHub at
+The source code is managed on GitHub at
 http://github.com/sidewaysmilk/popout_for_youtube .
-
-## Development Requirements
-
-You need a `zip` bin in your path and npm or yarn.
 
 ```sh
 npm install
 ```
 
-## Compiling
+## Developing
 
-Run `npm run` for a list of tasks. These are the big ones.
+```sh
+npm install
+npm run dev
+```
 
-- `npm run build` - compiles the CoffeeScript to JavaScript
-- `npm run zip` - `npm run build` then prepares the Chrome extension as a zip file
+## Building
+
+```sh
+npm run build
+```
+
+## Releasing
+
+```sh
+npm run release
+```
 
 ## Contributions
 
@@ -37,7 +44,7 @@ Thanks to the following developers for their contributions to the project!
 
 ## Copyright and License
 
-Copyright © 2010-2014, Justin Force - Licensed under the MIT License
+Copyright © 2010-2021, Justin Force - Licensed under the MIT License
 
 [sjb933]: https://github.com/sjb933
 [pr46]: https://github.com/justinforce/popout_for_youtube/pull/46
