@@ -21,9 +21,9 @@ export class Button extends NodeComponent {
   }
 
   setClickBehavior() {
-    return this.node.addEventListener("click", () => {
+    this.node.addEventListener("click", () => {
       this.video.pause()
-      return Extension.openPopout(this.video)
+      Extension.openPopout(this.video)
     })
   }
 
@@ -34,11 +34,11 @@ export class Button extends NodeComponent {
 
   remove() {
     clearInterval(this.styleInterval)
-    return this.node.parentNode.removeChild(this.node)
+    this.node.parentNode.removeChild(this.node)
   }
 
   maintainStyle() {
-    return this.video.waitForVideoNode().then(() => {
+    this.video.waitForVideoNode().then(() => {
       this.styleInterval = setInterval(() => {
         this.setDisplay()
         this.setBottomLeftCorner(this.video.topRightCorner())
@@ -48,9 +48,10 @@ export class Button extends NodeComponent {
 
   setDisplay() {
     if (this.node.style.top === "") {
-      return this.node.classList.add(HIDDEN_CLASS)
+      this.node.classList.add(HIDDEN_CLASS)
+    } else {
+      this.node.classList.remove(HIDDEN_CLASS)
     }
-    return this.node.classList.remove(HIDDEN_CLASS)
   }
 }
 

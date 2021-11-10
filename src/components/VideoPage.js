@@ -1,15 +1,10 @@
 import { POLLING_INTERVAL } from "./constants"
 import { Button } from "./VideoPage/Button"
 import { Extension } from "./VideoPage/Extension"
+import { getVideoId } from "./VideoPage/getVideoId"
 import { Video } from "./VideoPage/Video"
 
-function getVideoId() {
-  return new URLSearchParams(document.location.search.substring(1)).get("v")
-}
-
 export class VideoPage {
-  #onvideo = () => {} // eslint-disable-line class-methods-use-this
-
   title = document.title
 
   previousVideoId = null
@@ -18,13 +13,9 @@ export class VideoPage {
 
   mount = () => {
     setInterval(() => {
-      if (this.videoChanged() || this.titleChanged()) {
+      if (this.videoChanged || this.titleChanged) {
         Extension.notifyVideoViewed()
-        try {
-          this.button.remove()
-        } catch (error) {
-          // Can fail if the button isn't arleady there. Ignore.
-        }
+        if (this.button) this.button.remove()
         this.previousTitle = this.title
         this.title = document.title
         this.video = new Video(this.newVideoId, this.title)
@@ -36,9 +27,13 @@ export class VideoPage {
     }, POLLING_INTERVAL)
   }
 
-  videoChanged = () => getVideoId() !== this.previousVideoId
+  get videoChanged() {
+    return getVideoId() !== this.previousVideoId
+  }
 
-  titleChanged = () => document.title !== this.previousTitle
+  get titleChanged() {
+    return document.title !== this.previousTitle
+  }
 }
 
 export default VideoPage

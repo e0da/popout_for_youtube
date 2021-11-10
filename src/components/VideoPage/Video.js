@@ -16,11 +16,11 @@ export class Video extends NodeComponent {
   }
 
   pause() {
-    return this.node.pause()
+    this.node.pause()
   }
 
   play() {
-    return this.node.play()
+    this.node.play()
   }
 
   currentTime() {
@@ -33,9 +33,10 @@ export class Video extends NodeComponent {
 
   togglePlayback() {
     if (this.node.paused) {
-      return this.node.play()
+      this.node.play()
+    } else {
+      this.node.pause()
     }
-    return this.node.pause()
   }
 
   waitForVideoNode() {
@@ -43,9 +44,10 @@ export class Video extends NodeComponent {
       setInterval(() => {
         const node = selectVideo()
         if (node) {
-          return resolve(node, this)
+          resolve(node, this)
+        } else {
+          reject(new Error("Video node not found"))
         }
-        return reject(new Error("Video node not found"))
       }, POLLING_INTERVAL)
     })
   }

@@ -5,17 +5,14 @@ export class Popout {
     this.name = chrome.i18n.getMessage("name")
   }
 
-  mount = () => {
-    this.getVideoMetadata(() => {
-      this.setUpPlayer(() => {
-        this.loadVideo(() => {
-          loadPlayerAPI()
-        })
-      })
-    })
+  mount = async () => {
+    await this.getVideoMetadata()
+    this.setUpPlayer()
+    this.loadVideo()
+    loadPlayerAPI()
   }
 
-  loadVideo = (callback) => {
+  loadVideo = () => {
     const iframe = document.createElement("iframe")
     iframe.id = "player"
     iframe.title = "Video Player"
@@ -25,10 +22,9 @@ export class Popout {
     iframe.setAttribute("frameborder", "0")
     iframe.setAttribute("allowfullscreen", "")
     document.body.appendChild(iframe)
-    callback()
   }
 
-  setUpPlayer = (callback) => {
+  setUpPlayer = () => {
     window.onYouTubeIframeAPIReady = () => {
       this.player = new YT.Player("player", {
         height: this.height,
@@ -46,25 +42,29 @@ export class Popout {
       })
       window.player = this.player
     }
-    callback()
   }
 
-  getVideoMetadata = (callback) => {
-    chrome.windows.getCurrent((window) =>
-      chrome.extension.sendMessage(
-        {
-          action: "getVideoMetadata",
-          windowId: window.id,
-        },
-        (response) => {
-          this.videoId = response.videoId
-          this.currentTime = response.currentTime
-          document.title = this.windowTitle(response.title)
-          callback()
-        }
+  getVideoMetadata = async () =>
+    new Promise((resolve, reject) => {
+      chrome.windows.getCurrent((window) =>
+        chrome.extension.sendMessage(
+          {
+            action: "getVideoMetadata",
+            windowId: window.id,
+          },
+          (response) => {
+            this.videoId = response.videoId
+            this.currentTime = response.currentTime
+            document.title = this.windowTitle(response.title)
+            if (response.title) {
+              resolve()
+            } else {
+              reject()
+            }
+          }
+        )
       )
-    )
-  }
+    })
 
   windowTitle = (videoTitle) =>
     `${videoTitle.replace(/ - YouTube$/, "")} - ${this.name}`
