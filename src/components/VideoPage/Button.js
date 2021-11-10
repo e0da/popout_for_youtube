@@ -20,33 +20,32 @@ export class Button extends NodeComponent {
     this.maintainStyle()
   }
 
-  setClickBehavior() {
+  setClickBehavior = () => {
     this.node.addEventListener("click", () => {
       this.video.pause()
       Extension.openPopout(this.video)
     })
   }
 
-  setBottomLeftCorner(point) {
-    this.node.style.top = `${point.y - this.height()}px`
+  setBottomLeftCorner = (point) => {
+    this.node.style.top = `${point.y - this.height}px`
     this.node.style.left = `${point.x}px`
   }
 
-  remove() {
+  remove = () => {
     clearInterval(this.styleInterval)
     this.node.parentNode.removeChild(this.node)
   }
 
-  maintainStyle() {
-    this.video.waitForVideoNode().then(() => {
-      this.styleInterval = setInterval(() => {
-        this.setDisplay()
-        this.setBottomLeftCorner(this.video.topRightCorner())
-      }, POLLING_INTERVAL)
-    })
+  maintainStyle = async () => {
+    await this.video.mount()
+    this.styleInterval = setInterval(() => {
+      this.setDisplay()
+      this.setBottomLeftCorner(this.video.topRightCorner)
+    }, POLLING_INTERVAL)
   }
 
-  setDisplay() {
+  setDisplay = () => {
     if (this.node.style.top === "") {
       this.node.classList.add(HIDDEN_CLASS)
     } else {

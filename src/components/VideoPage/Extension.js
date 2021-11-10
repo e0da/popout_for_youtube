@@ -4,10 +4,10 @@ export class Extension {
       action: "openPopout",
       title: video.title,
       videoId: video.id,
-      currentTime: video.currentTime(),
-      width: video.width(),
-      height: video.height(),
-      uniqueId: Extension.uniqueId(),
+      currentTime: video.currentTime,
+      width: video.width,
+      height: video.height,
+      uniqueId: this.uniqueId(),
     })
   }
 
@@ -16,9 +16,7 @@ export class Extension {
   }
 
   static notifyVideoViewed() {
-    return chrome.extension.sendMessage({
-      action: "videoViewed",
-    })
+    chrome.extension.sendMessage({ action: "videoViewed" })
   }
 }
 

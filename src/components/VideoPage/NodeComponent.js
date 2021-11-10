@@ -2,7 +2,7 @@
 export class NodeComponent {
   quit = false
 
-  offset() {
+  get offset() {
     let el = this.node
     let left = 0
     let top = 0
@@ -15,19 +15,22 @@ export class NodeComponent {
     return { left, top }
   }
 
-  width() {
+  get width() {
     return parseInt(this.node.offsetWidth, 10)
   }
 
-  height() {
+  get height() {
     return parseInt(this.node.offsetHeight, 10)
   }
 
-  topRightCorner() {
-    return {
-      x: this.offset().left + this.width(),
-      y: this.offset().top,
-    }
+  get topRightCorner() {
+    const {
+      offset: { left, top },
+      width,
+    } = this
+    const x = left + width
+    const y = top
+    return { x, y }
   }
 }
 
