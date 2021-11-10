@@ -1,6 +1,7 @@
-var _gaq = _gaq || [] // eslint-disable-line
-_gaq.push(["_setAccount", "UA-21885508-1"])
-_gaq.push(["_trackPageview"])
+/* eslint-disable no-underscore-dangle */
+window._gaq = window._gaq || []
+window._gaq.push(["_setAccount", "UA-21885508-1"])
+window._gaq.push(["_trackPageview"])
 ;(() => {
   const ga = document.createElement("script")
   ga.type = "text/javascript"

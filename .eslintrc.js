@@ -5,7 +5,6 @@ module.exports = {
   },
   extends: ["airbnb-base", "prettier"],
   globals: {
-    _gaq: "writable",
     chrome: "readonly",
     YT: "readonly",
   },

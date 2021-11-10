@@ -9,7 +9,7 @@ export class Video {
 
   openWindow(callback) {
     const { width, height, title } = this
-    const opts = { type: "popup", url: "popout.html", width, height }
+    const opts = { type: "popup", url: "lib/popout.html", width, height }
     return chrome.windows.create(opts, (window) => callback(window, title))
   }
 }
