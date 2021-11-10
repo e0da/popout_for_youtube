@@ -1,4 +1,6 @@
 import { loadPlayerAPI } from "./Popout/loadPlayerAPI"
+import { loadVideo } from "./Popout/loadVideo"
+import { setUpPlayer } from "./Popout/setUpPlayer"
 
 export class Popout {
   constructor() {
@@ -6,45 +8,16 @@ export class Popout {
   }
 
   mount = async () => {
-    await this.getVideoMetadata()
-    this.setUpPlayer()
-    this.loadVideo()
-    loadPlayerAPI()
+    const { width, height } = this
+    const [videoId, seekTime] = await this.getVideoMetadata()
+    await Promise.all([
+      loadPlayerAPI(),
+      loadVideo(videoId),
+      setUpPlayer({ videoId, seekTime, width, height }),
+    ])
   }
 
-  loadVideo = () => {
-    const iframe = document.createElement("iframe")
-    iframe.id = "player"
-    iframe.title = "Video Player"
-    iframe.width = "100%"
-    iframe.height = "100%"
-    iframe.src = `https://www.youtube.com/embed/${this.videoId}?enablejsapi=1`
-    iframe.setAttribute("frameborder", "0")
-    iframe.setAttribute("allowfullscreen", "")
-    document.body.appendChild(iframe)
-  }
-
-  setUpPlayer = () => {
-    window.onYouTubeIframeAPIReady = () => {
-      this.player = new YT.Player("player", {
-        height: this.height,
-        width: this.width,
-        videoId: this.videoId,
-        playerVars: {
-          enablejsapi: 1,
-        },
-        events: {
-          onReady: () => {
-            this.player.seekTo(this.currentTime - 1)
-            this.player.playVideo()
-          },
-        },
-      })
-      window.player = this.player
-    }
-  }
-
-  getVideoMetadata = async () =>
+  getVideoMetadata = () =>
     new Promise((resolve, reject) => {
       chrome.windows.getCurrent((window) =>
         chrome.extension.sendMessage(
@@ -53,13 +26,11 @@ export class Popout {
             windowId: window.id,
           },
           (response) => {
-            this.videoId = response.videoId
-            this.currentTime = response.currentTime
             document.title = this.windowTitle(response.title)
             if (response.title) {
-              resolve()
+              resolve([response.videoId, response.currentTime])
             } else {
-              reject()
+              reject(new Error("Response had no title"))
             }
           }
         )

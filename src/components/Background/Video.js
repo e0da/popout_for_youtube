@@ -7,10 +7,12 @@ export class Video {
     this.height = height
   }
 
-  openWindow(callback) {
-    const { width, height, title } = this
-    const opts = { type: "popup", url: "build/popout.html", width, height }
-    chrome.windows.create(opts, (window) => callback(window, title))
+  openWindow() {
+    return new Promise((resolve) => {
+      const { width, height } = this
+      const opts = { type: "popup", url: "build/popout.html", width, height }
+      chrome.windows.create(opts, resolve)
+    })
   }
 }
 export default Video

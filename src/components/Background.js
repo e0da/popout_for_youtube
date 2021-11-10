@@ -27,7 +27,7 @@ export class Background {
     )
   }
 
-  openPopout(request /* , sender, sendResponse */) {
+  async openPopout(request) {
     Extension.reportButtonClick()
     const video = new Video(
       request.videoId,
@@ -36,9 +36,8 @@ export class Background {
       request.width,
       request.height
     )
-    video.openWindow((window) => {
-      this.videos[window.id] = video
-    })
+    const window = video.openWindow()
+    this.videos[(await window).id] = video
   }
 
   getVideoMetadata(request, sender, sendResponse) {
