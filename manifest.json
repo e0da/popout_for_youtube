@@ -1,11 +1,11 @@
 {
   "background": {
-    "scripts": ["build/analytics.bundle.js", "build/background.bundle.js"]
+    "scripts": ["build/background.bundle.js"]
   },
   "content_scripts": [
     {
-      "css": ["build/videoPage.css"],
-      "js": ["build/videoPage.bundle.js"],
+      "css": ["build/session.css"],
+      "js": ["build/session.bundle.js"],
       "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"]
     }
   ],

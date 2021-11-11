@@ -29,7 +29,7 @@ export function trackEvent(category, action, value) {
 }
 
 export function reportButtonClick() {
-  trackEvent("VideoPage", "popoutButtonClick")
+  trackEvent("Session", "popoutButtonClick")
 }
 
 export function reportVersion() {
@@ -37,7 +37,7 @@ export function reportVersion() {
 }
 
 export function reportVideoViewed() {
-  trackEvent("VideoPage", "videoViewed")
+  trackEvent("Session", "videoViewed")
 }
 
 export const Extension = {

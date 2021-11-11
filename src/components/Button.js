@@ -1,12 +1,12 @@
 import { POLLING_INTERVAL } from "./constants"
 import { openPopout } from "./Extension"
-import { NodeComponent } from "./NodeComponent"
+import { VirtualNode } from "./VirtualNode"
 
 const BUTTON_CLASS = "popout__button"
 
 const HIDDEN_CLASS = `${BUTTON_CLASS}--hidden`
 
-export class Button extends NodeComponent {
+export class Button extends VirtualNode {
   constructor(video1) {
     super()
     this.video = video1

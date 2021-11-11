@@ -1,10 +1,9 @@
+import { Button } from "./Button"
 import { POLLING_INTERVAL } from "./constants"
 import { notifyVideoViewed } from "./Extension"
-import { Button } from "./VideoPage/Button"
-import { getVideoId } from "./VideoPage/getVideoId"
-import { Video } from "./VideoPage/Video"
+import { getVideoId, Video } from "./Video"
 
-export class VideoPage {
+export class Session {
   title = document.title
 
   previousVideoId = null
@@ -36,4 +35,4 @@ export class VideoPage {
   }
 }
 
-export default VideoPage
+export default Session

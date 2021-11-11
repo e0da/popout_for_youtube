@@ -3,7 +3,7 @@ import {
   reportVersion,
   reportVideoViewed,
 } from "./Extension"
-import { Video } from "./Background/Video"
+import { Video } from "./Video"
 
 const LISTENERS = ["getVideoMetadata", "openPopout", "videoViewed"]
 

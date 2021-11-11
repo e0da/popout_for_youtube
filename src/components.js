@@ -1,3 +1,3 @@
 export * from "./components/Background"
 export * from "./components/Popout"
-export * from "./components/VideoPage"
+export * from "./components/Session"
