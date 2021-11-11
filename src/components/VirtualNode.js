@@ -1,5 +1,4 @@
-// Don't want to collide with glogal window.Node, so call it NodeComponent
-export class NodeComponent {
+export class VirtualNode {
   quit = false
 
   get offset() {
@@ -34,4 +33,4 @@ export class NodeComponent {
   }
 }
 
-export default NodeComponent
+export default VirtualNode

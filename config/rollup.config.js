@@ -1,4 +1,4 @@
-const sources = ["analytics", "background", "popout", "videoPage"]
+const sources = ["background", "popout", "session"]
 
 const config = sources.map((name) => ({
   input: `src/bundles/${name}Bundle.js`,
