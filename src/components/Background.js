@@ -1,4 +1,8 @@
-import { Extension } from "./Background/Extension"
+import {
+  reportButtonClick,
+  reportVersion,
+  reportVideoViewed,
+} from "./Extension"
 import { Video } from "./Background/Video"
 
 const LISTENERS = ["getVideoMetadata", "openPopout", "videoViewed"]
@@ -10,11 +14,11 @@ export class Background {
 
   mount() {
     this.setUpListeners()
-    Extension.reportVersion()
+    reportVersion()
   }
 
   videoViewed() {
-    Extension.reportVideoViewed(this.videos)
+    reportVideoViewed(this.videos)
   }
 
   setUpListeners() {
@@ -28,7 +32,7 @@ export class Background {
   }
 
   async openPopout(request) {
-    Extension.reportButtonClick()
+    reportButtonClick()
     const video = new Video(
       request.videoId,
       request.title,

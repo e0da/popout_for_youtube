@@ -1,11 +1,10 @@
 const name = chrome.i18n.getMessage("name")
 
-function windowTitle(videoTitle) {
-  return `${videoTitle.replace(/ - YouTube$/, "")} - ${name}`
-}
+const windowTitle = (videoTitle) =>
+  `${videoTitle.replace(/ - YouTube$/, "")} - ${name}`
 
-async function getVideoMetadata() {
-  return new Promise((resolve, reject) => {
+export const getVideoMetadata = () =>
+  new Promise((resolve, reject) => {
     chrome.windows.getCurrent((window) =>
       chrome.extension.sendMessage(
         {
@@ -23,10 +22,10 @@ async function getVideoMetadata() {
       )
     )
   })
-}
 
-function configurePlayer({ videoId, seekTime, width, height }) {
-  return () => {
+const readyHandler =
+  ({ videoId, seekTime, width, height }) =>
+  () => {
     const player = new YT.Player("player", {
       height,
       width,
@@ -40,43 +39,42 @@ function configurePlayer({ videoId, seekTime, width, height }) {
       },
     })
   }
+
+export const configurePlayer = async (video) => {
+  const onReady = readyHandler(video)
+  window.onYouTubeIframeAPIReady = onReady
+  return onReady
 }
 
-async function loadIframe({ videoId }) {
+export const loadIframe = async ({ videoId }) => {
   const iframe = document.createElement("iframe")
-  const vid = Promise.resolve(videoId)
   iframe.id = "player"
   iframe.title = "Video Player"
   iframe.width = "100%"
   iframe.height = "100%"
-  iframe.src = `https://www.youtube.com/embed/${await vid}?enablejsapi=1`
+  iframe.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1`
   iframe.setAttribute("frameborder", "0")
   iframe.setAttribute("allowfullscreen", "")
   document.body.appendChild(iframe)
   return iframe
 }
 
-async function loadIframeApi() {
-  return new Promise((resolve) => {
+export const loadIframeApi = () =>
+  new Promise((resolve) => {
     const script = document.createElement("script")
     script.src = "https://www.youtube.com/iframe_api"
 
     const firstScript = document.getElementsByTagName("script")[0]
     firstScript.parentNode.insertBefore(script, firstScript)
 
-    script.addEventListener("load", () => {
-      resolve(script)
-    })
+    script.addEventListener("load", resolve.bind(script))
   })
+
+const helpers = {
+  getVideoMetadata,
+  configurePlayer,
+  loadIframe,
+  loadIframeApi,
 }
 
-export async function loadPopout({ width, height }) {
-  const [videoId, seekTime] = await getVideoMetadata()
-  const iframe = loadIframe({ videoId })
-  const onReady = configurePlayer({ videoId, seekTime, width, height })
-  const iframeApi = onReady.then(loadIframeApi)
-  window.onYouTubeIframeAPIReady = await onReady
-  return Promise.all([iframe, iframeApi])
-}
-
-export default loadPopout
+export default helpers

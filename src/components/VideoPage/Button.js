@@ -1,5 +1,5 @@
 import { POLLING_INTERVAL } from "./constants"
-import { Extension } from "./Extension"
+import { openPopout } from "./Extension"
 import { NodeComponent } from "./NodeComponent"
 
 const BUTTON_CLASS = "popout__button"
@@ -23,7 +23,7 @@ export class Button extends NodeComponent {
   setClickBehavior = () => {
     this.node.addEventListener("click", () => {
       this.video.pause()
-      Extension.openPopout(this.video)
+      openPopout(this.video)
     })
   }
 

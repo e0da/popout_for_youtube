@@ -1,6 +1,6 @@
 import { POLLING_INTERVAL } from "./constants"
+import { notifyVideoViewed } from "./Extension"
 import { Button } from "./VideoPage/Button"
-import { Extension } from "./VideoPage/Extension"
 import { getVideoId } from "./VideoPage/getVideoId"
 import { Video } from "./VideoPage/Video"
 
@@ -14,7 +14,7 @@ export class VideoPage {
   mount = () => {
     setInterval(() => {
       if (this.videoChanged || this.titleChanged) {
-        Extension.notifyVideoViewed()
+        notifyVideoViewed()
         if (this.button) this.button.remove()
         this.previousTitle = this.title
         this.title = document.title
