@@ -5,12 +5,10 @@ import { VirtualNode } from "./VirtualNode"
 export { getVideoId, getVideoNode }
 
 export class Video extends VirtualNode {
-  constructor(currentTime, id, title, videoId, width, height) {
-    super()
-    this.currentTime = currentTime
+  constructor({ title, id, width, height }) {
+    super({ width, height })
     this.id = id
     this.title = title
-    this.videoId = videoId
     this.width = width
     this.height = height
   }
@@ -19,20 +17,8 @@ export class Video extends VirtualNode {
     this.node = await getVideoNode()
   }
 
-  pause = async () => this.node.pause()
+  pause = () => this.node.pause()
 
-  play = async () => this.node.play()
-
-  get currentTime() {
-    return this.node.currentTime
-  }
-
-  openWindow() {
-    return new Promise((resolve) => {
-      const { width, height } = this
-      const opts = { type: "popup", url: "build/popout.html", width, height }
-      chrome.windows.create(opts, resolve)
-    })
-  }
+  play = () => this.node.play()
 }
 export default Video

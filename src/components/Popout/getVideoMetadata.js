@@ -11,10 +11,10 @@ export const getVideoMetadata = () =>
           action: "getVideoMetadata",
           windowId: window.id,
         },
-        (response) => {
-          document.title = windowTitle(response.title)
-          if (response.title) {
-            resolve([response.videoId, response.currentTime])
+        ({ title, id, currentTime }) => {
+          document.title = windowTitle(title)
+          if (title) {
+            resolve([id, currentTime])
           } else {
             reject(new Error("Response had no title"))
           }

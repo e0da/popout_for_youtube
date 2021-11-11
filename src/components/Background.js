@@ -5,49 +5,48 @@ import {
 } from "./Extension"
 import { Video } from "./Video"
 
-const LISTENERS = ["getVideoMetadata", "openPopout", "videoViewed"]
+const LISTENERS = ["getVideoMetadata", "buttonClicked", "videoViewed"]
+
+const openWindow = ({ width, height }) =>
+  new Promise((resolve) => {
+    const opts = { type: "popup", url: "build/popout.html", width, height }
+    chrome.windows.create(opts, resolve)
+  })
+
+const setUpListeners = (node) => {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>
+    LISTENERS.forEach((listener) => {
+      if (request.action === listener) {
+        node[listener](request, sender, sendResponse)
+      }
+    })
+  )
+}
 
 export class Background {
+  videoViewed = reportVideoViewed
+
   constructor() {
     this.videos = []
   }
 
-  mount() {
-    this.setUpListeners()
+  mount = () => {
     reportVersion()
+    setUpListeners(this)
   }
 
-  videoViewed() {
-    reportVideoViewed(this.videos)
-  }
-
-  setUpListeners() {
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>
-      LISTENERS.forEach((listener) => {
-        if (request.action === listener) {
-          this[listener](request, sender, sendResponse)
-        }
-      })
-    )
-  }
-
-  async openPopout(request) {
+  buttonClicked = async (request) => {
     reportButtonClick()
-    const video = new Video(
-      request.videoId,
-      request.title,
-      request.currentTime,
-      request.width,
-      request.height
-    )
-    const window = video.openWindow()
+    const { id, title, currentTime, width, height } = request
+    const video = new Video({ id, title, currentTime, width, height })
+    const window = openWindow({ width, height })
     this.videos[(await window).id] = video
   }
 
-  getVideoMetadata(request, sender, sendResponse) {
+  getVideoMetadata = (request, sender, sendResponse) => {
     const video = this.videos[request.windowId]
     sendResponse({
-      videoId: video.videoId,
+      id: video.id,
       currentTime: video.currentTime,
       title: video.title,
     })

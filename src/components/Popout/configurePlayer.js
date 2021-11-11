@@ -1,23 +1,24 @@
 const readyHandler =
-  ({ videoId, seekTime, width, height }) =>
+  ({ id, currentTime, width, height }) =>
   () => {
     const player = new YT.Player("player", {
       height,
       width,
-      videoId,
+      id,
       playerVars: { enablejsapi: 1 },
       events: {
         onReady: () => {
-          player.seekTo(seekTime - 1)
+          player.seekTo(currentTime - 1)
           player.playVideo()
         },
       },
     })
   }
 
-export const configurePlayer = async (video) => {
+export function configurePlayer(video) {
   const onReady = readyHandler(video)
   window.onYouTubeIframeAPIReady = onReady
   return onReady
 }
+
 export default configurePlayer

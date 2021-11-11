@@ -2,22 +2,6 @@ export function notifyVideoViewed() {
   chrome.extension.sendMessage({ action: "videoViewed" })
 }
 
-export function uniqueId() {
-  return Math.random() ^ new Date().getTime() // eslint-disable-line no-bitwise
-}
-
-export function openPopout(video) {
-  return chrome.extension.sendMessage({
-    action: "openPopout",
-    title: video.title,
-    videoId: video.id,
-    currentTime: video.currentTime,
-    width: video.width,
-    height: video.height,
-    uniqueId: uniqueId(),
-  })
-}
-
 export function version() {
   return `v${chrome.runtime.getManifest().version}`
 }
@@ -42,12 +26,10 @@ export function reportVideoViewed() {
 
 export const Extension = {
   notifyVideoViewed,
-  openPopout,
   reportButtonClick,
   reportVersion,
   reportVideoViewed,
   trackEvent,
-  uniqueId,
   version,
 }
 
