@@ -11,17 +11,26 @@ export class Session {
   previousTitle = null
 
   mount = () => {
-    setInterval(() => {
+    setInterval(async () => {
       if (this.videoChanged || this.titleChanged) {
         notifyVideoViewed()
-        if (this.button) this.button.remove()
+        const id = getVideoId()
+        const { title } = document
+
+        const video = new Video({ id, title })
+        await video.mount()
+
+        const button = new Button({ video })
+        await button.mount()
+
+        this.button = button
+        this.video = video
+
         this.previousTitle = this.title
-        this.title = document.title
-        this.video = new Video(this.newVideoId, this.title)
-        this.button = new Button(this.video)
+        this.title = title
+
         this.previousVideoId = this.newVideoId
-        this.newVideoId = getVideoId()
-        document.body.appendChild(this.button.node)
+        this.newVideoId = id
       }
     }, POLLING_INTERVAL)
   }

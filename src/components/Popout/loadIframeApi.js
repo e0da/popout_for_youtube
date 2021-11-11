@@ -6,6 +6,6 @@ export const loadIframeApi = () =>
     const firstScript = document.getElementsByTagName("script")[0]
     firstScript.parentNode.insertBefore(script, firstScript)
 
-    script.addEventListener("load", resolve.bind(script))
+    script.addEventListener("load", () => resolve(script))
   })
 export default loadIframeApi
